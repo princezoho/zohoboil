@@ -15,6 +15,10 @@ build/
 dist/
 *.spec.bak
 
+# Icon build intermediates (keep ZohoBoil.icns, drop scratch)
+iconbuild/
+*.iconset/
+
 # App data (user uploads/outputs)
 uploads/
 outputs/

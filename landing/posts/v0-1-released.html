@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZohoBoil v0.1 — first public release</title>
+<meta name="description" content="ZohoBoil is a free Mac app that adds hand-drawn wobble to any video. Here's what's in the first release.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --yellow: #e8b84a;
+  --black: #0a0605;
+  --brown: #2a1a12;
+  --brown-deep: #1a100c;
+  --brown-line: #4a3025;
+  --cream: #e8dcc8;
+  --cream-dim: #8a7560;
+  --green: #5cb85c;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Helvetica Now Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--black);
+  color: var(--cream);
+  line-height: 1.65;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 {
+  font-family: "EB Garamond", Garamond, Georgia, serif;
+  font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: -0.01em;
+  margin: 1.6em 0 0.5em;
+  line-height: 1.1;
+}
+h1 { font-size: clamp(40px, 6vw, 64px); margin-top: 0.3em; }
+h2 { font-size: 32px; }
+h3 { font-size: 22px; color: var(--cream); }
+a { color: var(--yellow); text-decoration: none; border-bottom: 1px solid rgba(232,184,74,0.3); }
+a:hover { border-color: var(--yellow); }
+
+nav {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+nav .brand {
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--yellow);
+  border: none;
+}
+nav .brand sup { font-size: 10px; vertical-align: super; }
+nav .links a { color: var(--cream-dim); margin-left: 28px; border: none; }
+nav .links a:hover { color: var(--yellow); }
+
+article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+.meta {
+  color: var(--cream-dim);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+article p { margin: 0 0 1.3em; }
+article ul, article ol { padding-left: 1.3em; }
+article li { margin-bottom: 0.6em; }
+article code {
+  background: var(--brown-deep);
+  color: var(--green);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+article pre {
+  background: var(--brown-deep);
+  border: 1px solid var(--brown-line);
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+article pre code { background: none; padding: 0; color: var(--cream); }
+.callout {
+  background: var(--brown);
+  border-left: 3px solid var(--yellow);
+  padding: 20px 24px;
+  margin: 1.6em 0;
+  border-radius: 0 6px 6px 0;
+}
+.callout p:last-child { margin-bottom: 0; }
+.cta {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--black);
+  padding: 16px 32px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  margin-top: 1em;
+}
+.cta:hover { background: #d4a032; border: none; }
+
+footer {
+  padding: 40px 32px;
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 14px;
+  border-top: 1px solid var(--brown);
+}
+footer a { color: var(--cream-dim); border: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="brand">ZohoBoil<sup>™</sup></a>
+  <div class="links">
+    <a href="../#features">Features</a>
+    <a href="../#walkthrough">Walkthrough</a>
+    <a href="../#blog">Blog</a>
+    <a href="https://github.com/princezoho/zohoboil">GitHub</a>
+  </div>
+</nav>
+
+<article>
+  <div class="meta">May 21, 2026 · Release notes</div>
+  <h1>ZohoBoil v0.1 — first public release</h1>
+
+  <p>I built ZohoBoil because I kept hand-animating wobble onto clean digital footage and getting tired of doing it frame-by-frame in After Effects. There are plug-ins that approximate it, but they cost real money and they all look... synthetic. I wanted something free, fast, and ugly in the right way.</p>
+
+  <p>Today's the first public release. It's a Mac app. You download it, drag it to Applications, drop a video on it, and you get the wobbly, hand-drawn look that modern digital animation forgot.</p>
+
+  <a href="https://github.com/princezoho/zohoboil/releases/latest" class="cta">Download ZohoBoil for Mac</a>
+
+  <h2>What's in v0.1</h2>
+  <ul>
+    <li><strong>Line boil</strong> — edge-aware random displacement with five edge-blend modes (chunky, smooth, linear, hard, gentle).</li>
+    <li><strong>Chromatic aberration</strong> — independent R/G/B channel offsets plus a CA Blur for softness.</li>
+    <li><strong>Animated noise overlays</strong> — fine grain, medium, coarse, TV static, Perlin (three scales), scanlines.</li>
+    <li><strong>Edge detection</strong> in LAB color space, so the boil catches color transitions that grayscale Sobel would miss.</li>
+    <li><strong>Live preview</strong> with frame scrubbing and animated playback while you drag sliders.</li>
+    <li><strong>Audio preserved</strong> on export. H.264 MP4 out, ready for the web.</li>
+    <li><strong>GIF support</strong> — drop a GIF, it auto-loops to 5 seconds and processes like a video.</li>
+  </ul>
+
+  <h2>What's not in v0.1</h2>
+  <p>Honest list, so nobody expects something they won't get:</p>
+  <ul>
+    <li><strong>No Windows or Linux build.</strong> Mac only. macOS 12+ on Apple Silicon. Intel Mac and Windows builds are on the roadmap but not promised.</li>
+    <li><strong>Not code-signed.</strong> First launch needs a right-click → Open to bypass the Gatekeeper warning. Code signing requires the $99/yr Apple Developer Program and isn't worth it yet for a free open-source tool. (Donations toward it accepted.)</li>
+    <li><strong>No GPU acceleration.</strong> Everything runs on CPU via OpenCV. A 1080p, 30-second clip processes in under a minute on an M2; longer clips and 4K take proportionally longer.</li>
+    <li><strong>No web version.</strong> Server costs and the file-upload bandwidth math don't make sense for a free tool yet. Maybe later, if there's demand.</li>
+  </ul>
+
+  <h2>How it works under the hood</h2>
+  <p>For each frame, ZohoBoil:</p>
+  <ol>
+    <li>Converts to LAB color space and runs Sobel edge detection on each channel, taking the max to build a single edge-strength map.</li>
+    <li>Generates N pre-baked random displacement maps (the "variations"). Each one is a low-resolution grid of random vectors, upscaled with one of five interpolation strategies to control how blocky vs. smooth the wobble feels.</li>
+    <li>Cycles through those variations every <em>hold-frames</em> frames, so the boil "holds" briefly before shifting — the same way a hand-drawn animator holds each drawing for a few frames.</li>
+    <li>Weights the displacement by the edge map, so the wobble concentrates on edges (or doesn't, depending on your Edge Weight slider).</li>
+    <li>Applies the displacement via <code>cv2.remap</code>, then layers on chromatic aberration and noise overlays.</li>
+    <li>Re-encodes the output to H.264 via a bundled <code>ffmpeg</code> binary, copying the original audio track through.</li>
+  </ol>
+
+  <div class="callout">
+    <p>The full source is open under the MIT license: <a href="https://github.com/princezoho/zohoboil">github.com/princezoho/zohoboil</a>. Fork it, modify it, ship your own version. Just keep the copyright line.</p>
+  </div>
+
+  <h2>What's next</h2>
+  <p>Roadmap in roughly the order I plan to ship it:</p>
+  <ul>
+    <li>Better presets (one-click "VHS", "rotoscope", "Saturday morning cartoon")</li>
+    <li>Universal binary so it runs natively on Intel Macs too</li>
+    <li>Per-region masks — boil just the character, leave the background still</li>
+    <li>Windows build</li>
+    <li>Tempo-locked boil — sync the variation cycle to a BPM for music videos</li>
+  </ul>
+
+  <p>If you use ZohoBoil and something is broken or stupid, open an issue on <a href="https://github.com/princezoho/zohoboil/issues">GitHub</a>. If you ship something cool made with it, send it.</p>
+
+  <a href="https://github.com/princezoho/zohoboil/releases/latest" class="cta">Download ZohoBoil for Mac</a>
+</article>
+
+<footer>
+  <p>ZohoBoil is built by <a href="https://github.com/princezoho">Prince Zoho</a>. Open source under the <a href="https://github.com/princezoho/zohoboil/blob/main/LICENSE">MIT license</a>.</p>
+</footer>
+
+</body>
+</html>

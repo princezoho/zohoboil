@@ -5,6 +5,8 @@ Edge-aware line boil with color edge detection and varied randomness.
 """
 
 import os
+import shutil
+import sys
 import uuid
 import threading
 import base64
@@ -13,6 +15,39 @@ from flask import Flask, render_template_string, request, jsonify, send_file
 import cv2
 import numpy as np
 from PIL import Image
+
+
+def find_ffmpeg():
+    """Locate ffmpeg: bundled binary first, then PATH, then well-known locations."""
+    candidates = []
+    # Bundled inside PyInstaller .app (Contents/Frameworks/bin/ffmpeg via _MEIPASS)
+    meipass = getattr(sys, '_MEIPASS', None)
+    if meipass:
+        candidates.append(os.path.join(meipass, 'bin', 'ffmpeg'))
+    # Alongside this script (dev mode)
+    candidates.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', 'ffmpeg'))
+    for c in candidates:
+        if os.path.exists(c) and os.access(c, os.X_OK):
+            return c
+    found = shutil.which('ffmpeg')
+    if found:
+        return found
+    for path in (
+        '/opt/homebrew/bin/ffmpeg',
+        '/usr/local/bin/ffmpeg',
+        '/opt/local/bin/ffmpeg',
+        '/usr/bin/ffmpeg',
+    ):
+        if os.path.exists(path):
+            return path
+    return None
+
+
+FFMPEG_PATH = find_ffmpeg()
+if FFMPEG_PATH:
+    print(f"ffmpeg: {FFMPEG_PATH}", file=sys.stderr)
+else:
+    print("WARNING: ffmpeg not found — output will lack audio and may not play in browsers.", file=sys.stderr)
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024
@@ -125,7 +160,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boiler</title>
+    <title>ZohoBoil</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap');
 
@@ -318,7 +353,7 @@ HTML_TEMPLATE = '''
     </style>
 </head>
 <body>
-    <h1>Boiler<sup>TM</sup></h1>
+    <h1>ZohoBoil<sup>TM</sup></h1>
 
     <div class="main-container">
         <div class="controls-panel">
@@ -902,7 +937,24 @@ HTML_TEMPLATE = '''
 
                 if (data.status === 'complete') {
                     downloadBtn.style.display = 'block';
-                    downloadBtn.onclick = () => window.location.href = '/download/' + jobId;
+                    downloadBtn.onclick = async () => {
+                        // Desktop (pywebview): native Save dialog
+                        if (window.pywebview && window.pywebview.api && window.pywebview.api.save_output) {
+                            try {
+                                const res = await window.pywebview.api.save_output(jobId);
+                                if (res && res.ok) {
+                                    progressText.textContent = 'Saved: ' + res.path;
+                                } else if (res && res.error && res.error !== 'cancelled') {
+                                    alert('Save failed: ' + res.error);
+                                }
+                            } catch (e) {
+                                alert('Save error: ' + e.message);
+                            }
+                        } else {
+                            // Web mode: browser download
+                            window.location.href = '/download/' + jobId;
+                        }
+                    };
                     processBtn.disabled = false;
                 } else if (data.status === 'error') {
                     processBtn.disabled = false;
@@ -1039,26 +1091,26 @@ def generate_varied_displacements(h, w, region_size, max_shift, randomness, num_
 
 def apply_chromatic_aberration(frame, r_offset, g_offset, b_offset, blur_amount):
     """Apply chromatic aberration by shifting RGB channels."""
-    if r_offset == 0 and g_offset == 0 and b_offset == 0:
+    if r_offset == 0 and g_offset == 0 and b_offset == 0 and blur_amount == 0:
         return frame
 
     h, w = frame.shape[:2]
     b, g, r = cv2.split(frame)
 
-    # Create translation matrices for each channel
     def shift_channel(channel, offset_x, offset_y=0):
+        if offset_x == 0 and offset_y == 0:
+            return channel
         M = np.float32([[1, 0, offset_x], [0, 1, offset_y]])
         return cv2.warpAffine(channel, M, (w, h), borderMode=cv2.BORDER_REFLECT)
 
-    # Shift channels (offset is horizontal)
     r_shifted = shift_channel(r, r_offset)
     g_shifted = shift_channel(g, g_offset)
     b_shifted = shift_channel(b, b_offset)
 
-    # Apply blur to shifted channels if requested
     if blur_amount > 0:
-        ksize = blur_amount * 2 + 1
+        ksize = int(blur_amount) * 2 + 1
         r_shifted = cv2.GaussianBlur(r_shifted, (ksize, ksize), 0)
+        g_shifted = cv2.GaussianBlur(g_shifted, (ksize, ksize), 0)
         b_shifted = cv2.GaussianBlur(b_shifted, (ksize, ksize), 0)
 
     return cv2.merge([b_shifted, g_shifted, r_shifted])
@@ -1297,7 +1349,7 @@ def process_video_task(job_id, input_path, output_path, params):
         try:
             # Use ffmpeg to re-encode to H.264 (web compatible) and add audio
             cmd = [
-                'ffmpeg', '-y',
+                FFMPEG_PATH or 'ffmpeg', '-y',
                 '-i', temp_video,       # processed video (mp4v codec)
                 '-i', input_path,       # original video (has audio)
                 '-c:v', 'libx264',      # H.264 codec - web compatible
@@ -1322,7 +1374,7 @@ def process_video_task(job_id, input_path, output_path, params):
             # If ffmpeg fails, try without audio
             try:
                 cmd_no_audio = [
-                    'ffmpeg', '-y',
+                    FFMPEG_PATH or 'ffmpeg', '-y',
                     '-i', temp_video,
                     '-c:v', 'libx264',
                     '-preset', 'fast',
@@ -1648,14 +1700,14 @@ def download(job_id):
     return send_file(
         job['output_path'],
         as_attachment=True,
-        download_name='lineboil_output.mp4',
+        download_name='zohoboil_output.mp4',
         mimetype='video/mp4'
     )
 
 
 if __name__ == '__main__':
     print("\n" + "="*50)
-    print("Line Boil Effect App")
+    print("ZohoBoil")
     print("="*50)
     print("\nOpen: http://localhost:5050\n")
     app.run(host='0.0.0.0', port=5050, debug=False)

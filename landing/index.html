@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZohoBoil — give any video that hand-drawn wobble</title>
+<meta name="description" content="A free Mac desktop app that adds a hand-drawn 'line boil' wobble, chromatic aberration, and film grain to any video or GIF. By Prince Zoho.">
+
+<meta property="og:title" content="ZohoBoil — hand-drawn wobble for any video">
+<meta property="og:description" content="Free Mac app. Drop a video, drag a few sliders, export with the wobbly charm of traditional animation.">
+<meta property="og:image" content="/boil/screenshot.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --yellow: #e8b84a;
+  --yellow-deep: #d4a032;
+  --black: #0a0605;
+  --brown: #2a1a12;
+  --brown-deep: #1a100c;
+  --brown-line: #4a3025;
+  --cream: #e8dcc8;
+  --cream-dim: #8a7560;
+  --green: #5cb85c;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: "Helvetica Now Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--black);
+  color: var(--cream);
+  line-height: 1.55;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: "EB Garamond", Garamond, Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4em 0;
+  color: var(--yellow);
+}
+h1 { font-size: clamp(48px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.03em; }
+h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1.05; }
+h3 { font-size: 24px; line-height: 1.2; color: var(--yellow); }
+h4 { font-size: 18px; color: var(--cream); }
+
+a { color: var(--yellow); text-decoration: none; border-bottom: 1px solid rgba(232,184,74,0.3); transition: border-color 0.2s; }
+a:hover { border-color: var(--yellow); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+.container-narrow { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+
+/* ----- Nav ----- */
+nav {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+nav .brand {
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--yellow);
+  border: none;
+}
+nav .brand sup { font-size: 10px; vertical-align: super; }
+nav .links a { color: var(--cream-dim); margin-left: 28px; border: none; }
+nav .links a:hover { color: var(--yellow); }
+
+/* ----- Hero ----- */
+.hero {
+  padding: 60px 0 80px;
+  text-align: center;
+}
+.hero h1 sup { font-size: 0.25em; vertical-align: super; color: var(--cream-dim); }
+.hero .tagline {
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--cream);
+  max-width: 700px;
+  margin: 20px auto 36px;
+  line-height: 1.3;
+}
+
+.btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+  font-family: inherit;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: var(--yellow);
+  color: var(--black);
+}
+.btn-primary:hover { background: var(--yellow-deep); border: none; }
+.btn-secondary {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--brown-line);
+}
+.btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+.btn-meta {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--cream-dim);
+}
+
+/* ----- Screenshot ----- */
+.shot-wrap {
+  padding: 0 0 80px;
+}
+.shot {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--brown-line);
+  display: block;
+}
+
+/* ----- Sections ----- */
+section { padding: 80px 0; border-top: 1px solid var(--brown); }
+
+.lede {
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.35;
+  color: var(--cream);
+  margin-bottom: 40px;
+}
+
+/* ----- Feature grid ----- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+.feature {
+  background: var(--brown);
+  padding: 28px;
+  border-radius: 10px;
+  border: 1px solid var(--brown-line);
+}
+.feature h3 { margin-bottom: 12px; font-size: 22px; }
+.feature p { color: var(--cream); margin: 0; font-size: 15px; }
+
+/* ----- Walkthrough ----- */
+.steps {
+  counter-reset: step;
+  margin-top: 40px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--brown);
+}
+.step:last-child { border-bottom: none; }
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
+  font-size: 64px;
+  color: var(--yellow);
+  line-height: 1;
+}
+.step h3 { margin-top: 0; color: var(--cream); }
+.step p { color: var(--cream); margin: 0; }
+.step code {
+  background: var(--brown-deep);
+  color: var(--green);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ----- Blog ----- */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+.post {
+  background: var(--brown);
+  padding: 28px;
+  border-radius: 10px;
+  border: 1px solid var(--brown-line);
+  transition: border-color 0.2s, transform 0.2s;
+  border-bottom: 1px solid var(--brown-line);
+}
+.post:hover { border-color: var(--yellow); transform: translateY(-2px); }
+.post .date { font-size: 12px; color: var(--cream-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.post h3 { color: var(--yellow); margin: 0 0 12px 0; font-size: 22px; }
+.post p { margin: 0; color: var(--cream); font-size: 15px; }
+
+/* ----- Footer ----- */
+footer {
+  padding: 60px 32px 40px;
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 14px;
+  border-top: 1px solid var(--brown);
+}
+footer a { color: var(--cream-dim); border: none; }
+footer a:hover { color: var(--yellow); }
+
+@media (max-width: 600px) {
+  .step { grid-template-columns: 48px 1fr; gap: 16px; }
+  .step::before { font-size: 40px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="container">
+  <a href="/boil" class="brand">ZohoBoil<sup>™</sup></a>
+  <div class="links">
+    <a href="#features">Features</a>
+    <a href="#walkthrough">Walkthrough</a>
+    <a href="#blog">Blog</a>
+    <a href="https://github.com/princezoho/zohoboil">GitHub</a>
+  </div>
+</nav>
+
+<header class="hero container-narrow">
+  <h1>ZohoBoil<sup>™</sup></h1>
+  <p class="tagline">Give any video the wobbly, hand-drawn life of traditional animation. Free Mac app. No subscriptions, no accounts.</p>
+  <div class="btn-row">
+    <div>
+      <a href="https://github.com/princezoho/zohoboil/releases/latest" class="btn btn-primary">Download for Mac</a>
+      <span class="btn-meta">~200 MB · Apple Silicon · macOS 12+</span>
+    </div>
+    <div>
+      <a href="https://github.com/princezoho/zohoboil" class="btn btn-secondary">View on GitHub</a>
+      <span class="btn-meta">MIT license · open source</span>
+    </div>
+  </div>
+</header>
+
+<div class="shot-wrap container">
+  <img class="shot" src="screenshot.png" alt="ZohoBoil app interface showing a cartoon woman hanging laundry with the line boil effect applied.">
+</div>
+
+<section id="features">
+  <div class="container-narrow">
+    <h2>What it does</h2>
+    <p class="lede">Modern digital animation looks clean and dead. ZohoBoil puts the wobble back.</p>
+    <div class="features">
+      <div class="feature">
+        <h3>Line boil</h3>
+        <p>Edge-aware random displacement that mimics the natural wobble of hand-drawn frames. Every edge breathes a little.</p>
+      </div>
+      <div class="feature">
+        <h3>Chromatic aberration</h3>
+        <p>Split the red, green, and blue channels independently for that VHS / old-film color-fringe look. Add CA Blur for softness.</p>
+      </div>
+      <div class="feature">
+        <h3>Animated noise overlays</h3>
+        <p>Fine grain, coarse grain, TV static, Perlin noise, scanlines — all animated frame-by-frame.</p>
+      </div>
+      <div class="feature">
+        <h3>Edge detection</h3>
+        <p>Concentrate the wobble on color edges only, or let it ripple across the whole frame. Sensitivity catches subtle color transitions.</p>
+      </div>
+      <div class="feature">
+        <h3>Live preview</h3>
+        <p>Play an animated preview while you tweak. No "render and pray" cycle — see the change instantly.</p>
+      </div>
+      <div class="feature">
+        <h3>Audio preserved</h3>
+        <p>Original audio passes through cleanly. Export as H.264 MP4, ready for the web.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="walkthrough">
+  <div class="container-narrow">
+    <h2>How to use it</h2>
+    <div class="steps">
+      <div class="step">
+        <div>
+          <h3>Download &amp; install</h3>
+          <p>Grab <code>ZohoBoil.app.zip</code> from the <a href="https://github.com/princezoho/zohoboil/releases/latest">Releases page</a>, unzip, drag into Applications. First launch: right-click → <strong>Open</strong>. macOS will warn about an unidentified developer — that's expected. You only need to do it once.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Drop a video</h3>
+          <p>Drag any <code>.mp4</code>, <code>.mov</code>, or <code>.gif</code> onto the dashed box. The preview shows the original on top, the boiled version below.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Set the wobble</h3>
+          <p>Move the <strong>Max Shift</strong> slider to control how many pixels each edge can wander. <strong>Hold Frames</strong> controls how long each "drawing" sits before the next boil. Start low — a value of 3 already looks alive.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Stack effects</h3>
+          <p>Add <strong>Chromatic Aberration</strong> for color-fringe character. Pick a <strong>Noise Overlay</strong> for grain or static. Use <strong>Edge Weight</strong> to focus the boil on edges only.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Live preview, then export</h3>
+          <p>Click <strong>▶ Live Preview</strong> to see the result animated while you tweak. When you like it, hit <strong>Process Video</strong>, wait for the bar, then <strong>Download</strong>. The Save dialog opens at your Downloads folder.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="container-narrow">
+    <h2>Notes from the workshop</h2>
+    <p class="lede">Short writing about the app, animation, and the things that broke along the way.</p>
+    <div class="posts">
+      <a href="posts/v0-1-released.html" class="post">
+        <div class="date">May 21, 2026</div>
+        <h3>ZohoBoil v0.1 — first public release</h3>
+        <p>Why the world needs another video filter app. What's in this release, what's not, and what's coming next.</p>
+      </a>
+      <a href="posts/why-line-boil-matters.html" class="post">
+        <div class="date">Coming soon</div>
+        <h3>Why "boiling lines" matter</h3>
+        <p>A short history of the wobble — from Disney's bouncing-ball tests to modern flash animation, and why every digital filter ignores it.</p>
+      </a>
+      <a href="posts/under-the-hood.html" class="post">
+        <div class="date">Coming soon</div>
+        <h3>Under the hood — how ZohoBoil works</h3>
+        <p>LAB color-space edge detection, displacement maps, OpenCV remap. A walk through the actual code, for the curious.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>ZohoBoil is built by <a href="https://github.com/princezoho">Prince Zoho</a>. Open source under the <a href="https://github.com/princezoho/zohoboil/blob/main/LICENSE">MIT license</a>.</p>
+  <p>Bundles <a href="https://ffmpeg.org/">FFmpeg</a> (GPL 2+) for video encoding.</p>
+</footer>
+
+</body>
+</html>
