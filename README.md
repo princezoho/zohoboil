@@ -85,6 +85,49 @@ These settings are a calm, usable boil. Start here and push from there.
 
 ---
 
+## MCP server
+
+Boiler ships an MCP server, so an AI agent can boil video without the GUI. It
+exposes three tools:
+
+| Tool | What it does |
+| --- | --- |
+| `list_presets` | The available looks and every parameter each one sets |
+| `preview_boil` | Renders one boiled frame as a PNG, in about a second |
+| `boil_video` | Boils a whole clip and writes an MP4, audio intact |
+
+Presets are `default` (the smooth sine boil), `subtle`, `heavy`, and `vhs`. Any
+individual parameter can be overridden:
+
+```json
+{ "input_path": "~/Desktop/clip.mp4", "preset": "vhs", "overrides": { "shift": 6 } }
+```
+
+Add it to Claude Code:
+
+```bash
+claude mcp add boiler --scope user -- \
+  /path/to/zohoboil/venv/bin/python /path/to/zohoboil/mcp_server.py
+```
+
+Or in any MCP client's config:
+
+```json
+{
+  "mcpServers": {
+    "boiler": {
+      "command": "/path/to/zohoboil/venv/bin/python",
+      "args": ["/path/to/zohoboil/mcp_server.py"]
+    }
+  }
+}
+```
+
+Check settings with `preview_boil` before calling `boil_video`. A full boil runs
+about a second per frame, so a 30 second clip takes a few minutes.
+
+---
+
 ## Build from source
 
 You need this only to modify the code or compile the app yourself. Requires
@@ -127,6 +170,7 @@ xcrun stapler staple dist/Boiler.app
 
 ```
 app.py            Flask server and all video processing
+mcp_server.py     MCP server exposing the boil as agent tools
 desktop_app.py    pywebview wrapper for the desktop build
 Boiler.spec       PyInstaller build config
 build_dmg.sh      Builds the .app and a DMG
