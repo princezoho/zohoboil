@@ -34,3 +34,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Personal one-off boil scripts (hardcoded local paths)
+_boil_*.py
+_one.py
+batch_*.py
+pipeline_clean.py

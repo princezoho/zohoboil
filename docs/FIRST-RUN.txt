@@ -1,0 +1,12 @@
+BOILER
+
+1. Drag Boiler into the Applications folder.
+2. Open it.
+
+Boiler is signed and notarized by Apple, so it opens on a
+double-click. No security warning, no right-click workaround.
+
+Drop a video in, move the sliders, click Process Video, then
+Download Result and pick where it goes.
+
+Made by Jeje Studios.
