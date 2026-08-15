@@ -19,25 +19,36 @@ from PIL import Image
 
 def find_ffmpeg():
     """Locate ffmpeg: bundled binary first, then PATH, then well-known locations."""
+    import platform
+    is_windows = platform.system() == 'Windows'
+    exe_name = 'ffmpeg.exe' if is_windows else 'ffmpeg'
+
     candidates = []
-    # Bundled inside PyInstaller .app (Contents/Frameworks/bin/ffmpeg via _MEIPASS)
+    # Bundled inside PyInstaller bundle (_MEIPASS/bin/ffmpeg[.exe])
     meipass = getattr(sys, '_MEIPASS', None)
     if meipass:
-        candidates.append(os.path.join(meipass, 'bin', 'ffmpeg'))
+        candidates.append(os.path.join(meipass, 'bin', exe_name))
     # Alongside this script (dev mode)
-    candidates.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', 'ffmpeg'))
+    candidates.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', exe_name))
     for c in candidates:
         if os.path.exists(c) and os.access(c, os.X_OK):
             return c
     found = shutil.which('ffmpeg')
     if found:
         return found
-    for path in (
-        '/opt/homebrew/bin/ffmpeg',
-        '/usr/local/bin/ffmpeg',
-        '/opt/local/bin/ffmpeg',
-        '/usr/bin/ffmpeg',
-    ):
+    if is_windows:
+        well_known = (
+            r'C:\ffmpeg\bin\ffmpeg.exe',
+            r'C:\Program Files\ffmpeg\bin\ffmpeg.exe',
+        )
+    else:
+        well_known = (
+            '/opt/homebrew/bin/ffmpeg',
+            '/usr/local/bin/ffmpeg',
+            '/opt/local/bin/ffmpeg',
+            '/usr/bin/ffmpeg',
+        )
+    for path in well_known:
         if os.path.exists(path):
             return path
     return None
@@ -59,8 +70,32 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 processing_status = {}
 uploaded_videos = {}
+job_save_names = {}
+
+# Set to True by desktop_app.py. The browser can force a real download with a
+# Content-Disposition header; the WKWebView the desktop app runs in cannot, so
+# in desktop mode saving has to happen on this side of the wire.
+DESKTOP_MODE = False
 
 DEFAULT_GIF_DURATION = 5.0  # Default output duration for GIFs in seconds
+
+
+def sanitize_name(name):
+    """Reduce an arbitrary upload filename to something safe to write to disk."""
+    keep = [c for c in name if c.isalnum() or c in ' ._-']
+    cleaned = ''.join(keep).strip().replace(' ', '-')
+    return cleaned[:60] or 'video'
+
+
+def unique_path(directory, filename):
+    """A path in `directory` that does not collide with an existing file."""
+    base, ext = os.path.splitext(filename)
+    candidate = os.path.join(directory, filename)
+    counter = 2
+    while os.path.exists(candidate):
+        candidate = os.path.join(directory, f"{base}-{counter}{ext}")
+        counter += 1
+    return candidate
 
 
 def convert_gif_to_video(gif_path, output_path, target_duration=DEFAULT_GIF_DURATION):
@@ -282,6 +317,8 @@ HTML_TEMPLATE = '''
         .progress-text { text-align: center; margin-top: 6px; color: #8a7560; font-size: 11px; }
         .download-btn { display: none; background: #5cb85c; color: #0a0605; font-weight: bold; }
         .download-btn:hover { background: #4a9f4a; }
+        .saved-row { display: none; align-items: center; gap: 10px; margin-top: 10px; }
+        .saved-path { flex: 1; font-size: 12px; opacity: 0.75; word-break: break-all; }
 
         .preview-panel {
             flex: 1;
@@ -593,6 +630,10 @@ HTML_TEMPLATE = '''
             </div>
 
             <button class="download-btn" id="downloadBtn">Download Result</button>
+            <div class="saved-row" id="savedRow">
+                <span class="saved-path" id="savedPath"></span>
+                <button class="secondary" id="revealBtn">Show in Finder</button>
+            </div>
         </div>
     </div>
 
@@ -605,6 +646,9 @@ HTML_TEMPLATE = '''
         const progressFill = document.getElementById('progressFill');
         const progressText = document.getElementById('progressText');
         const downloadBtn = document.getElementById('downloadBtn');
+        const savedRow = document.getElementById('savedRow');
+        const savedPath = document.getElementById('savedPath');
+        const revealBtn = document.getElementById('revealBtn');
         const refreshPreview = document.getElementById('refreshPreview');
         const livePreviewBtn = document.getElementById('livePreviewBtn');
         const frameSlider = document.getElementById('frameSlider');
@@ -911,6 +955,7 @@ HTML_TEMPLATE = '''
             progressFill.style.width = '0%';
             progressText.textContent = 'Starting...';
             downloadBtn.style.display = 'none';
+            savedRow.style.display = 'none';
 
             try {
                 const response = await fetch('/process', {
@@ -927,6 +972,77 @@ HTML_TEMPLATE = '''
             }
         });
 
+        // Whether we are inside the desktop app's web view. Answered by the
+        // server, so it does not depend on the pywebview bridge being injected.
+        let isDesktop = false;
+        fetch('/config')
+            .then(r => r.json())
+            .then(cfg => { isDesktop = !!cfg.desktop; })
+            .catch(() => {});
+
+        // The pywebview bridge is injected after load, so a click that lands
+        // early would otherwise fall through to the browser download path.
+        function pywebviewApi(timeoutMs) {
+            const deadline = Date.now() + (timeoutMs || 0);
+            return new Promise(resolve => {
+                (function poll() {
+                    if (window.pywebview && window.pywebview.api && window.pywebview.api.save_output) {
+                        resolve(window.pywebview.api);
+                    } else if (Date.now() >= deadline) {
+                        resolve(null);
+                    } else {
+                        setTimeout(poll, 50);
+                    }
+                })();
+            });
+        }
+
+        async function saveResult(jobId) {
+            downloadBtn.disabled = true;
+            const label = downloadBtn.textContent;
+            downloadBtn.textContent = 'Saving...';
+            try {
+                if (isDesktop) {
+                    // Preferred: a real macOS Save dialog, so the user picks the folder.
+                    const api = await pywebviewApi(3000);
+                    if (api) {
+                        const res = await api.save_output(jobId);
+                        if (res && res.ok) {
+                            showSaved(res.path);
+                            return;
+                        }
+                        if (res && res.error === 'cancelled') return;
+                    }
+                    // Bridge unavailable: drop it in ~/Downloads rather than
+                    // navigating the web view to the video (which just plays it).
+                    const res = await fetch('/save/' + jobId, { method: 'POST' }).then(r => r.json());
+                    if (res.ok) {
+                        showSaved(res.path);
+                    } else {
+                        alert('Save failed: ' + res.error);
+                    }
+                } else {
+                    // Browser: Content-Disposition on /download does the work.
+                    window.location.assign('/download/' + jobId);
+                }
+            } catch (e) {
+                alert('Save error: ' + e.message);
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = label;
+            }
+        }
+
+        function showSaved(path) {
+            savedRow.style.display = 'flex';
+            savedPath.textContent = 'Saved to ' + path;
+            revealBtn.onclick = () => fetch('/reveal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: path })
+            });
+        }
+
         async function checkProgress() {
             try {
                 const response = await fetch('/status/' + jobId);
@@ -937,24 +1053,7 @@ HTML_TEMPLATE = '''
 
                 if (data.status === 'complete') {
                     downloadBtn.style.display = 'block';
-                    downloadBtn.onclick = async () => {
-                        // Desktop (pywebview): native Save dialog
-                        if (window.pywebview && window.pywebview.api && window.pywebview.api.save_output) {
-                            try {
-                                const res = await window.pywebview.api.save_output(jobId);
-                                if (res && res.ok) {
-                                    progressText.textContent = 'Saved: ' + res.path;
-                                } else if (res && res.error && res.error !== 'cancelled') {
-                                    alert('Save failed: ' + res.error);
-                                }
-                            } catch (e) {
-                                alert('Save error: ' + e.message);
-                            }
-                        } else {
-                            // Web mode: browser download
-                            window.location.href = '/download/' + jobId;
-                        }
-                    };
+                    downloadBtn.onclick = () => saveResult(jobId);
                     processBtn.disabled = false;
                 } else if (data.status === 'error') {
                     processBtn.disabled = false;
@@ -1460,7 +1559,8 @@ def upload():
         'path': input_path,
         'total_frames': total_frames,
         'width': vid_width,
-        'height': vid_height
+        'height': vid_height,
+        'source_name': os.path.splitext(os.path.basename(video.filename))[0] or 'video'
     }
 
     return jsonify({
@@ -1671,6 +1771,8 @@ def process():
         'progress': 0,
         'message': 'Starting...'
     }
+    # Kept outside processing_status: process_video_task replaces that dict wholesale.
+    job_save_names[job_id] = f"{sanitize_name(video_info.get('source_name', 'video'))}_boiled.mp4"
 
     thread = threading.Thread(
         target=process_video_task,
@@ -1688,21 +1790,68 @@ def status(job_id):
     return jsonify(processing_status[job_id])
 
 
+@app.route('/config')
+def config():
+    """Tells the front end which save path to use."""
+    return jsonify({'desktop': DESKTOP_MODE})
+
+
+def finished_job(job_id):
+    """(output_path, save_name) for a completed job, or (None, error_message)."""
+    if job_id not in processing_status:
+        return None, 'Job not found'
+    job = processing_status[job_id]
+    if job.get('status') != 'complete':
+        return None, 'Processing not complete'
+    path = job.get('output_path')
+    if not path or not os.path.exists(path):
+        return None, 'Output file is missing'
+    return path, job_save_names.get(job_id, 'boiled.mp4')
+
+
 @app.route('/download/<job_id>')
 def download(job_id):
-    if job_id not in processing_status:
-        return "Job not found", 404
+    path, name = finished_job(job_id)
+    if path is None:
+        return name, 404 if name == 'Job not found' else 400
 
-    job = processing_status[job_id]
-    if job['status'] != 'complete':
-        return "Processing not complete", 400
-
+    # octet-stream, not video/mp4: a mp4 mimetype invites the browser (and any
+    # embedded web view) to play the file inline instead of saving it.
     return send_file(
-        job['output_path'],
+        path,
         as_attachment=True,
-        download_name='zohoboil_output.mp4',
-        mimetype='video/mp4'
+        download_name=name,
+        mimetype='application/octet-stream',
     )
+
+
+@app.route('/save/<job_id>', methods=['POST'])
+def save(job_id):
+    """Desktop fallback: copy the finished video into ~/Downloads."""
+    path, name = finished_job(job_id)
+    if path is None:
+        return jsonify({'ok': False, 'error': name}), 400
+
+    downloads = os.path.expanduser('~/Downloads')
+    try:
+        os.makedirs(downloads, exist_ok=True)
+        dest = unique_path(downloads, name)
+        shutil.copy2(path, dest)
+    except OSError as e:
+        return jsonify({'ok': False, 'error': str(e)}), 500
+    return jsonify({'ok': True, 'path': dest})
+
+
+@app.route('/reveal', methods=['POST'])
+def reveal():
+    """Show a saved file in Finder. Desktop only."""
+    if not DESKTOP_MODE:
+        return jsonify({'ok': False, 'error': 'not available'}), 400
+    path = (request.json or {}).get('path', '')
+    if not path or not os.path.exists(path):
+        return jsonify({'ok': False, 'error': 'file missing'}), 400
+    subprocess.run(['open', '-R', path], check=False)
+    return jsonify({'ok': True})
 
 
 if __name__ == '__main__':

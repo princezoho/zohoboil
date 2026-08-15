@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boiler: hand-drawn wobble for any video</title>
+<meta name="description" content="A free Mac app that gives video the wobbling line of hand-drawn animation. Drop a clip in, move a few sliders, save it out.">
+
+<meta property="og:title" content="Boiler: hand-drawn wobble for any video">
+<meta property="og:description" content="A free Mac app that gives video the wobbling line of hand-drawn animation. Drop a clip in, move a few sliders, save it out.">
+<meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
+<meta property="og:url" content="https://boiler.jejestudios.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+
+<style>
+@font-face {
+  font-family: 'Wanted';
+  src: url('assets/wanted.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --ink: #0a0a0a;
+  --cream: #f5e9dc;
+  --cream-dim: #9a8b7c;
+  --rust: #c87f2f;
+  --rule: #2e2620;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+a { color: var(--rust); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Nav */
+.nav-band { border-bottom: 2px solid var(--rule); }
+nav {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 20px 24px;
+  max-width: 1040px; margin: 0 auto; flex-wrap: wrap; gap: 12px;
+}
+.wordmark {
+  font-family: 'Wanted', Georgia, serif;
+  font-size: 34px; letter-spacing: 0.06em; color: var(--cream);
+}
+.wordmark:hover { text-decoration: none; color: var(--rust); }
+nav .links { display: flex; gap: 26px; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; }
+nav .links a { color: var(--cream-dim); }
+nav .links a:hover { color: var(--rust); text-decoration: none; }
+
+/* Hero */
+.hero {
+  border-bottom: 2px solid var(--rule);
+  background-image: linear-gradient(rgba(10,10,10,0.82), rgba(10,10,10,0.94)), url('assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.hero-inner { max-width: 1040px; margin: 0 auto; padding: 90px 24px 80px; }
+h1 {
+  font-family: 'Wanted', Georgia, serif;
+  font-size: clamp(52px, 9vw, 116px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  max-width: 15ch;
+}
+.lede {
+  font-size: clamp(19px, 2.2vw, 23px);
+  max-width: 46ch;
+  margin-top: 26px;
+  color: var(--cream);
+}
+.hero-actions { margin-top: 38px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  background: var(--rust);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 17px 34px;
+  border: 2px solid var(--rust);
+}
+.btn:hover { background: var(--ink); color: var(--rust); text-decoration: none; }
+.btn-ghost { background: transparent; color: var(--cream); border-color: var(--rule); }
+.btn-ghost:hover { background: transparent; color: var(--rust); border-color: var(--rust); }
+.req { font-size: 14px; color: var(--cream-dim); }
+
+/* Sections */
+section { border-bottom: 2px solid var(--rule); padding: 76px 0; }
+h2 {
+  font-family: 'Wanted', Georgia, serif;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.section-lede { color: var(--cream-dim); max-width: 56ch; margin-bottom: 40px; }
+
+/* Demo */
+/* Explicit ratio so the box holds its shape before the video loads. */
+.demo { width: 100%; display: block; border: 2px solid var(--rule); aspect-ratio: 2 / 1; background: #14100c; }
+.demo-labels {
+  display: grid; grid-template-columns: 1fr 1fr;
+  font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-dim); margin-top: 12px; text-align: center;
+}
+
+/* Feature grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; background: var(--rule); border: 2px solid var(--rule); }
+.cell { background: var(--ink); padding: 30px 26px; }
+.cell h3 {
+  font-family: 'Wanted', Georgia, serif;
+  font-size: 25px; color: var(--rust); margin-bottom: 10px; letter-spacing: 0.02em;
+}
+.cell p { color: var(--cream-dim); font-size: 16px; }
+
+/* Steps */
+.steps { counter-reset: step; display: grid; gap: 26px; max-width: 62ch; }
+.step { display: flex; gap: 20px; align-items: baseline; }
+.step .num {
+  font-family: 'Wanted', Georgia, serif; font-size: 40px; color: var(--rust);
+  line-height: 1; min-width: 46px;
+}
+.step p { color: var(--cream-dim); }
+.step b { color: var(--cream); font-weight: 700; }
+
+.shot { width: 100%; display: block; border: 2px solid var(--rule); margin-top: 8px; }
+
+/* Download band */
+.band { text-align: center; }
+.band h2 { margin-bottom: 18px; }
+.band .req { margin-top: 22px; }
+
+footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+
+@media (max-width: 640px) {
+  .hero-inner { padding: 56px 24px 52px; }
+  section { padding: 54px 0; }
+  nav .links { gap: 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<div class="nav-band">
+  <nav>
+    <a class="wordmark" href="/">BOILER</a>
+    <div class="links">
+      <a href="#what">What it does</a>
+      <a href="#how">How it works</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/princezoho/zohoboil">GitHub</a>
+    </div>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Every line should wobble.</h1>
+    <p class="lede">Boiler gives video the restless, redrawn edge of hand-drawn animation. Drop a clip in, move a few sliders, save it out.</p>
+    <div class="hero-actions">
+      <a class="btn" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download for Mac</a>
+      <a class="btn btn-ghost" href="#what">See it</a>
+      <span class="req">Free. macOS 12 or later, Apple Silicon.</span>
+    </div>
+  </div>
+</div>
+
+<section id="what">
+  <div class="wrap">
+    <h2>Before and after</h2>
+    <p class="section-lede">Same footage, one pass through Boiler. The edges are redrawn a few pixels off on every held frame, the way a hand redraws them.</p>
+    <video class="demo" src="assets/demo-compare.mp4" autoplay loop muted playsinline></video>
+    <div class="demo-labels"><span>Original</span><span>Boiled</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What you get</h2>
+    <div class="grid">
+      <div class="cell">
+        <h3>The boil</h3>
+        <p>Wobble that follows the edges in the frame, from a faint shimmer to a full tremor. Hold it for two frames or six.</p>
+      </div>
+      <div class="cell">
+        <h3>Chromatic split</h3>
+        <p>Pull the red and blue channels apart for old film and worn tape.</p>
+      </div>
+      <div class="cell">
+        <h3>Grain and static</h3>
+        <p>Fine grain, coarse grain, TV static, Perlin, scanlines. Layer it over the boil.</p>
+      </div>
+      <div class="cell">
+        <h3>Live preview</h3>
+        <p>Scrub a frame or play the loop while you work. No waiting on a render to see a slider.</p>
+      </div>
+      <div class="cell">
+        <h3>Video or GIF</h3>
+        <p>MP4, MOV, and animated GIF go in. MP4 comes out, audio intact.</p>
+      </div>
+      <div class="cell">
+        <h3>Nothing to install</h3>
+        <p>No Python, no Terminal, no Homebrew. ffmpeg ships inside the app. Your video never leaves the machine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><p><b>Drop a video in.</b> The original sits on top, the boiled version below it.</p></div>
+      <div class="step"><span class="num">2</span><p><b>Move the sliders.</b> Shift sets how far edges wander. Hold sets how long each drawing stays up. Everything updates in the preview.</p></div>
+      <div class="step"><span class="num">3</span><p><b>Process, then save.</b> Pick the folder, and the file lands there.</p></div>
+    </div>
+    <img class="shot" src="assets/screenshot.jpg" alt="The Boiler window: preview on the left, line boil sliders on the right." loading="lazy">
+  </div>
+</section>
+
+<section class="band" id="download">
+  <div class="wrap">
+    <h2>Take it for a ride</h2>
+    <p class="section-lede" style="margin: 0 auto 30px;">Signed and notarized by Apple, so it opens on a double-click.</p>
+    <a class="btn" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download Boiler 1.0.0</a>
+    <p class="req">macOS 12 or later, Apple Silicon. Free, and the source is on <a href="https://github.com/princezoho/zohoboil">GitHub</a>.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>Made by <a href="https://www.jejestudios.com">Jeje Studios</a>.</span>
+    <span><a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="https://github.com/princezoho/zohoboil/issues">Report a bug</a></span>
+  </footer>
+</div>
+
+</body>
+</html>
