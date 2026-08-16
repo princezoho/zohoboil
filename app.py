@@ -5,6 +5,7 @@ Edge-aware line boil with color edge detection and varied randomness.
 """
 
 import os
+import platform
 import shutil
 import sys
 import uuid
@@ -19,7 +20,6 @@ from PIL import Image
 
 def find_ffmpeg():
     """Locate ffmpeg: bundled binary first, then PATH, then well-known locations."""
-    import platform
     is_windows = platform.system() == 'Windows'
     exe_name = 'ffmpeg.exe' if is_windows else 'ffmpeg'
 
@@ -1842,15 +1842,34 @@ def save(job_id):
     return jsonify({'ok': True, 'path': dest})
 
 
+def reveal_in_file_manager(path):
+    """Select a file in the OS file manager. Returns False if unsupported."""
+    system = platform.system()
+    try:
+        if system == 'Darwin':
+            subprocess.run(['open', '-R', path], check=False)
+        elif system == 'Windows':
+            # explorer wants the argument glued to the switch, and it returns
+            # a non-zero exit code even when it succeeds.
+            subprocess.run(f'explorer /select,"{path}"', shell=True, check=False)
+        else:
+            # No portable "select the file" on Linux, so open the folder.
+            subprocess.run(['xdg-open', os.path.dirname(path)], check=False)
+        return True
+    except OSError:
+        return False
+
+
 @app.route('/reveal', methods=['POST'])
 def reveal():
-    """Show a saved file in Finder. Desktop only."""
+    """Show a saved file in the OS file manager. Desktop only."""
     if not DESKTOP_MODE:
         return jsonify({'ok': False, 'error': 'not available'}), 400
     path = (request.json or {}).get('path', '')
     if not path or not os.path.exists(path):
         return jsonify({'ok': False, 'error': 'file missing'}), 400
-    subprocess.run(['open', '-R', path], check=False)
+    if not reveal_in_file_manager(path):
+        return jsonify({'ok': False, 'error': 'could not open file manager'}), 500
     return jsonify({'ok': True})
 
 

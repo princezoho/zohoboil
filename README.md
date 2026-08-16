@@ -4,6 +4,8 @@
 
 **[boiler.jejestudios.com](https://boiler.jejestudios.com)**
 
+![Original footage beside the same footage after a pass through Boiler, the outlines visibly redrawn each frame.](docs/demo.gif)
+
 ![The Boiler window: preview on the left, line boil sliders on the right.](docs/screenshot.png)
 
 ---
@@ -15,10 +17,28 @@
 Open the DMG, drag Boiler into Applications, open it. The app is signed and
 notarized by Apple, so it opens on a double-click with no security warning.
 
-Requires macOS 12 or later on Apple Silicon. Intel Macs are not supported yet.
-
 No Python, no Terminal, no Homebrew. ffmpeg ships inside the app, and your
 video never leaves your machine.
+
+### Which machines
+
+The prebuilt DMG is macOS 12 or later on Apple Silicon. That is a packaging
+limit, not a technical one: PyInstaller builds for the architecture it runs on,
+and the bundled ffmpeg is an arm64 binary. Nothing in the code needs Apple
+Silicon or macOS.
+
+Everywhere else, run it from source. The processing is OpenCV, NumPy and
+ffmpeg, all of which are cross-platform, and the interface is a local web page.
+
+| Platform | How |
+| --- | --- |
+| macOS, Apple Silicon | Download the DMG |
+| macOS, Intel | Run from source, or build your own DMG with `./build_dmg.sh` |
+| Windows | Run from source. ffmpeg is found on `PATH` or at the usual install locations |
+| Linux | Run from source |
+
+An Intel or universal DMG needs a build on that architecture, since PyInstaller
+cannot cross-compile. Contributions welcome.
 
 ---
 
@@ -144,6 +164,15 @@ python3 app.py           # web mode, http://localhost:5050
 python3 desktop_app.py   # native window
 ```
 
+Web mode works on macOS, Windows and Linux with no extra steps. Desktop mode
+additionally needs `pywebview`, which uses the platform's own web view: WebKit
+on macOS, WebView2 on Windows, WebKitGTK on Linux. Neither mode bundles a
+browser engine.
+
+ffmpeg is found in this order: the copy bundled inside the app, then a `bin/`
+folder beside the source, then `PATH`, then the usual install locations for
+your OS.
+
 To build the app bundle and a DMG:
 
 ```bash
@@ -175,7 +204,7 @@ desktop_app.py    pywebview wrapper for the desktop build
 Boiler.spec       PyInstaller build config
 build_dmg.sh      Builds the .app and a DMG
 package_dmg.sh    Wraps a stapled .app into a notarized DMG
-bin/ffmpeg        Bundled ffmpeg binary (arm64)
+bin/ffmpeg        Bundled ffmpeg binary (arm64, macOS)
 site/             The boiler.jejestudios.com landing page
 docs/             Screenshots and release notes
 ```

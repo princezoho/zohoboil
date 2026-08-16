@@ -3,14 +3,31 @@
 
 import json
 import os
+import platform
 import shutil
 import socket
 import sys
 import threading
 import time
 
-# Redirect uploads/outputs to a writable user dir BEFORE importing app
-DATA_DIR = os.path.expanduser('~/Library/Application Support/ZohoBoil')
+
+def user_data_dir(app_name='Boiler'):
+    """Where this OS expects an app to keep its working files."""
+    system = platform.system()
+    if system == 'Darwin':
+        base = os.path.expanduser('~/Library/Application Support')
+    elif system == 'Windows':
+        base = os.environ.get('APPDATA') or os.path.expanduser('~\\AppData\\Roaming')
+    else:
+        base = os.environ.get('XDG_DATA_HOME') or os.path.expanduser('~/.local/share')
+    return os.path.join(base, app_name)
+
+
+# Redirect uploads/outputs to a writable user dir BEFORE importing app.
+# The old macOS-only path is honoured when it already holds files, so an
+# existing install does not lose its outputs on upgrade.
+_legacy = os.path.expanduser('~/Library/Application Support/ZohoBoil')
+DATA_DIR = _legacy if os.path.isdir(_legacy) else user_data_dir()
 os.makedirs(os.path.join(DATA_DIR, 'uploads'), exist_ok=True)
 os.makedirs(os.path.join(DATA_DIR, 'outputs'), exist_ok=True)
 
@@ -88,7 +105,7 @@ class Api:
 
     def reveal(self, path):
         if os.path.exists(path):
-            subprocess.run(['open', '-R', path], check=False)
+            boiler_app.reveal_in_file_manager(path)
         return {'ok': True}
 
 
@@ -126,7 +143,7 @@ def main():
         print("Server failed to start", file=sys.stderr)
         sys.exit(1)
     webview.create_window(
-        'ZohoBoil',
+        'Boiler',
         f'http://127.0.0.1:{port}',
         width=1500,
         height=1000,
