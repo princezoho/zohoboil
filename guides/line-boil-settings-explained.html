@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Every Line Boil Setting, Explained</title>
+<meta name="description" content="What Max Shift, Region Size, Randomness, Hold Frames, Variations, Edge Weight, Chunkiness, and Wave Type each change, with the range worth using for each.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/line-boil-settings-explained">
+<meta property="og:title" content="Every Line Boil Setting, Explained">
+<meta property="og:description" content="What Max Shift, Region Size, Randomness, Hold Frames, Variations, Edge Weight, Chunkiness, and Wave Type each change, with the range worth using for each.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/line-boil-settings-explained">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%94%A5</text></svg>">
+<style>
+:root{--ink:#0a0a0a;--cream:#f5e9dc;--cream-dim:#9a8b7c;--rust:#c87f2f;--rule:#2e2620;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ink);color:var(--cream);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+ font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+@font-face{font-family:'Wanted';src:url('/assets/wanted.ttf') format('truetype');font-display:swap;}
+a{color:var(--rust);text-decoration:none;} a:hover{text-decoration:underline;}
+.nav-band{border-bottom:2px solid var(--rule);}
+nav{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
+ max-width:1040px;margin:0 auto;padding:20px 24px;}
+.wordmark{font-family:'Wanted',Georgia,serif;font-size:32px;letter-spacing:.06em;color:var(--cream);}
+nav .links{display:flex;gap:22px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;}
+nav .links a{color:var(--cream-dim);}
+.wrap{max-width:720px;margin:0 auto;padding:56px 24px 40px;}
+h1{font-family:'Wanted',Georgia,serif;font-size:clamp(36px,6.5vw,62px);line-height:1;margin-bottom:18px;}
+h2{font-family:'Wanted',Georgia,serif;font-size:clamp(24px,4vw,34px);line-height:1.1;margin:44px 0 12px;}
+h3{font-family:'Wanted',Georgia,serif;font-size:22px;color:var(--rust);margin:30px 0 8px;}
+p{margin:0 0 18px;}
+.answer{font-size:21px;color:var(--cream);border-left:3px solid var(--rust);padding-left:18px;margin:0 0 26px;}
+.meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);
+ border-top:2px solid var(--rule);border-bottom:2px solid var(--rule);padding:10px 0;margin:0 0 30px;}
+ul{padding-left:22px;margin:0 0 18px;} li{margin:7px 0;}
+blockquote{margin:26px 0;padding-left:18px;border-left:3px solid var(--rule);color:var(--cream-dim);font-size:20px;}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:16px;}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--cream-dim);}
+code{background:#1a1512;padding:2px 6px;font-size:15px;}
+.cta{display:inline-block;background:var(--rust);color:var(--ink);font-weight:700;letter-spacing:.05em;
+ text-transform:uppercase;padding:15px 30px;border:2px solid var(--rust);margin:8px 0;}
+.cta:hover{background:var(--ink);color:var(--rust);text-decoration:none;}
+.card{border:2px solid var(--rule);padding:26px;margin:44px 0 0;}
+.card h3{margin-top:0;}
+.card p{color:var(--cream-dim);font-size:16px;}
+.hub{list-style:none;padding:0;}
+.hub li{border-bottom:1px solid var(--rule);padding:22px 0;}
+.hub a{font-family:'Wanted',Georgia,serif;font-size:24px;color:var(--cream);}
+.hub p{color:var(--cream-dim);font-size:16px;margin:6px 0 0;}
+footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
+footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+</style>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Every Line Boil Setting, Explained", "description": "What Max Shift, Region Size, Randomness, Hold Frames, Variations, Edge Weight, Chunkiness, and Wave Type each change, with the range worth using for each.", "datePublished": "2026-08-16", "dateModified": "2026-08-16", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/line-boil-settings-explained", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "Every Line Boil Setting, Explained", "item": "https://boiler.jejestudios.com/guides/line-boil-settings-explained"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Every Line Boil Setting, Explained?", "acceptedAnswer": {"@type": "Answer", "text": "The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long each drawing lasts), Variations (how many drawings cycle), Randomness (how uneven the movement is), and Edge Weight (how tightly the effect follows outlines)."}}]}]</script>
+</head>
+<body>
+<div class="nav-band"><nav>
+<a class="wordmark" href="/">BOILER</a>
+<div class="links">
+<a href="/guides/">Guides</a>
+<a href="/#download">Download</a>
+<a href="https://github.com/princezoho/zohoboil">GitHub</a>
+</div></nav></div>
+<article class="wrap">
+<h1>Every Line Boil Setting, Explained</h1>
+<p class="answer">The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long each drawing lasts), Variations (how many drawings cycle), Randomness (how uneven the movement is), and Edge Weight (how tightly the effect follows outlines).</p>
+<div class="meta">August 16, 2026 &nbsp;·&nbsp; Jeje Studios</div>
+<p>Every line boil is the same idea with different numbers: push the edges off their true position, hold that push for a moment, then push them somewhere else. These are the numbers.</p>
+<h2>Max Shift</h2>
+<p>The furthest a line can travel from where it actually sits, in pixels.</p>
+<p>This is the volume knob. Everything else shapes the character of the movement, but this decides how much of it there is.</p>
+<p>Useful range is 2 to 6. Remember it is measured in pixels, not as a percentage, so the same value is a much weaker effect on a larger frame.</p>
+<h2>Region Size</h2>
+<p>How large each independently-moving area is.</p>
+<p>Small regions mean the displacement changes rapidly across the frame, so a single long line can bend in several directions at once. Large regions move whole sections together, which reads as the entire drawing being redrawn slightly off rather than as a wobbly pen.</p>
+<p>Small values produce chatter. Large values produce drift.</p>
+<h2>Randomness</h2>
+<p>How much the strength of the movement varies between regions.</p>
+<p>At 0 every region moves by the same amount, which is regular enough that the eye finds the pattern. At 1.0 some regions barely move while others take the full shift, which is closer to how an actual hand misses.</p>
+<p>0.8 is a good default. It is uneven without being chaotic.</p>
+<h2>Hold Frames</h2>
+<p>How many frames a single displacement stays on screen before it is replaced.</p>
+<p>This is the most important setting after Max Shift, and the one most often left wrong. At 1, every frame gets a new displacement and the result buzzes like television static. At 2, you get the rhythm of animation drawn on twos.</p>
+<table><tr><th>Hold</th><th>Effective drawing rate at 24fps</th></tr><tr><td>1</td><td>24 drawings per second</td></tr><tr><td>2</td><td>12 drawings per second</td></tr><tr><td>3</td><td>8 drawings per second</td></tr><tr><td>4</td><td>6 drawings per second</td></tr></table>
+<h2>Variations</h2>
+<p>How many distinct displacements exist before the cycle repeats.</p>
+<p>With 2, the image alternates between two states, a visible back-and-forth. It is the cheapest-looking option and occasionally the right one. With 4, the eye stops being able to predict the sequence. Above 6 there is little visible gain.</p>
+<h2>Edge Weight</h2>
+<p>How much the effect concentrates on detected color edges rather than the whole frame.</p>
+<p>Near 1.0, only outlines move and flat areas stay perfectly still, which is the faithful imitation of redrawing. Near 0, everything moves equally, which is a warp rather than a redraw and looks like heat rising off a road.</p>
+<h2>Edge Sensitivity</h2>
+<p>How much of a color change counts as an edge.</p>
+<p>Raise it to catch soft, low-contrast transitions. Lower it to restrict the effect to hard outlines only. On noisy footage, high sensitivity will find edges in the noise and boil the noise, which is rarely what anyone wants.</p>
+<h2>Chunkiness</h2>
+<p>How sharply the displacement changes from one region to the next.</p>
+<p>Low values blend smoothly between regions, so lines bend. High values snap between regions, so lines break into segments that shift as blocks. Chunky settings suit rough, scratchy artwork.</p>
+<h2>Wave Type</h2>
+<p>The shape of the underlying displacement field.</p>
+<p>Sine produces smooth, rounded wandering. Noise produces an irregular field with no discernible rhythm. Sine is the safer choice for anything that should look drawn by a person, since a person&#x27;s hand moves in arcs.</p>
+<h2>A note on how these interact</h2>
+<p>Max Shift and Region Size are not independent. A large shift inside a small region tears the line, because neighboring pixels get pulled in very different directions across a short distance. If lines start breaking apart, either reduce the shift or increase the region size.</p>
+<div class="card">
+<h3>Boiler does this</h3>
+<p>Free Mac app. Drop a video in, move the sliders, save it out.
+macOS 12 or later, Apple Silicon.</p>
+<p><a class="cta" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download Boiler</a></p>
+</div>
+<div class="card">
+<h3>While you are here</h3>
+<p>The same studio makes <a href="https://halfsies.jejestudios.com">Halfsies</a>, a daily game about
+cutting things exactly in half by eye. One puzzle a day, one attempt, scored on
+how close you got. It is free on iPhone.</p>
+<p><a class="cta" href="https://apps.apple.com/us/app/halfsies/id6789426613">Get Halfsies on the App Store</a></p>
+</div>
+</article>
+<footer><div class="inner">
+<span>Made by <a href="https://www.jejestudios.com">Jeje Studios</a>, who also make
+<a href="https://halfsies.jejestudios.com">Halfsies</a>.</span>
+<span><a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="/guides/">Guides</a></span>
+</div></footer>
+</body>
+</html>

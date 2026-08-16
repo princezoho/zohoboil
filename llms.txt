@@ -1,0 +1,48 @@
+# Boiler
+
+> A free, open source Mac app that gives video the wobbling line of hand-drawn
+> animation, an effect animators call line boil.
+
+Boiler redraws the edges in every frame a few pixels off their true position,
+holds each drawing for a set number of frames, then cycles between a handful of
+variations. That is what makes hand-drawn animation shimmer, and what digital
+video lacks.
+
+## Facts
+
+- What it is: A Mac app that applies a hand-drawn line boil to video.
+- Price: Free, and open source under the MIT license.
+- Requirements: macOS 12 or later, Apple Silicon
+- Input formats: MP4, MOV, and animated GIF.
+- Output: MP4, H.264, with the original audio preserved.
+- Effects: Line boil, chromatic aberration, and five noise overlays.
+- Privacy: Video is processed on your own machine and never uploaded.
+- Install: Signed and notarized by Apple, so it opens on a double-click.
+
+## Settings
+
+- Max Shift: how many pixels each edge can wander.
+- Region Size: how large the wobbling regions are.
+- Randomness: variation in wobble strength between regions.
+- Hold Frames: how many frames each drawing stays on screen before it changes.
+- Variations: how many distinct drawings cycle.
+- Edge Weight: how tightly the boil clings to detected color edges.
+
+## Links
+
+- Download: https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg
+- Source: https://github.com/princezoho/zohoboil
+- Guides: https://boiler.jejestudios.com/guides/
+
+## Guides
+
+- [Chromatic Aberration in Video, and How to Fake It Well](https://boiler.jejestudios.com/guides/chromatic-aberration-video): Chromatic aberration is the colored fringing that appears when a lens or a printing process fails to land the red, green, and blue components of an image in exactly the same place, and it is faked in video by offsetting the color channels two or three pixels apart.
+- [How to Add Line Boil to a Video on a Mac](https://boiler.jejestudios.com/guides/how-to-add-line-boil-to-video): To add line boil to a video on a Mac, open the clip in Boiler, set Max Shift to 3 pixels and Hold Frames to 2, cycle 4 variations, then process and save the result as an MP4.
+- [Every Line Boil Setting, Explained](https://boiler.jejestudios.com/guides/line-boil-settings-explained): The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long each drawing lasts), Variations (how many drawings cycle), Randomness (how uneven the movement is), and Edge Weight (how tightly the effect follows outlines).
+- [How to Make a Video Look Hand-Drawn](https://boiler.jejestudios.com/guides/make-video-look-hand-drawn): To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing.
+- [What Is Line Boil in Animation?](https://boiler.jejestudios.com/guides/what-is-line-boil): Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no line ever lands in exactly the same place twice.
+
+## Also from Jeje Studios
+
+- Halfsies (https://halfsies.jejestudios.com), a daily iPhone game about cutting things exactly in
+  half by eye. Free on the App Store: https://apps.apple.com/us/app/halfsies/id6789426613

@@ -12,6 +12,76 @@
 <meta property="og:url" content="https://boiler.jejestudios.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://boiler.jejestudios.com/">
+
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Boiler",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "macOS 12 or later, Apple Silicon",
+  "url": "https://boiler.jejestudios.com",
+  "downloadUrl": "https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg",
+  "softwareVersion": "1.0.0",
+  "description": "A free Mac app that gives video the wobbling line of hand-drawn animation, an effect animators call line boil. Also does chromatic aberration and noise overlays.",
+  "featureList": [
+   "Edge-aware line boil with adjustable shift, hold frames and variations",
+   "Chromatic aberration with per-channel offsets",
+   "Five noise overlays: fine grain, coarse grain, TV static, Perlin, scanlines",
+   "Live preview",
+   "MP4, MOV and animated GIF input",
+   "Original audio preserved on export"
+  ],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "license": "https://opensource.org/licenses/MIT",
+  "author": { "@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com" }
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "What is line boil?",
+    "acceptedAnswer": { "@type": "Answer", "text": "Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no line ever lands in exactly the same place twice." }
+   },
+   {
+    "@type": "Question",
+    "name": "Is Boiler free?",
+    "acceptedAnswer": { "@type": "Answer", "text": "Yes. Boiler is free and open source under the MIT license." }
+   },
+   {
+    "@type": "Question",
+    "name": "What does Boiler run on?",
+    "acceptedAnswer": { "@type": "Answer", "text": "macOS 12 or later on Apple Silicon. It is signed and notarized by Apple, so it opens on a double-click." }
+   },
+   {
+    "@type": "Question",
+    "name": "What file formats does Boiler accept?",
+    "acceptedAnswer": { "@type": "Answer", "text": "MP4, MOV, and animated GIF go in. An MP4 comes out, with the original audio preserved." }
+   },
+   {
+    "@type": "Question",
+    "name": "Does Boiler upload my video anywhere?",
+    "acceptedAnswer": { "@type": "Answer", "text": "No. Video is processed entirely on your own machine. ffmpeg is bundled inside the app and nothing is sent over the network." }
+   }
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jeje Studios",
+  "url": "https://www.jejestudios.com",
+  "sameAs": [
+   "https://halfsies.jejestudios.com",
+   "https://apps.apple.com/us/app/halfsies/id6789426613",
+   "https://github.com/princezoho"
+  ]
+ }
+]
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
 
 <style>
@@ -205,6 +275,18 @@ h2 {
 
 .shot { width: 100%; display: block; border: 2px solid var(--rule); margin-top: 8px; }
 
+/* FAQ */
+.faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px 44px; }
+.qa h3 { font-family: 'Wanted', Georgia, serif; font-size: 23px; color: var(--rust); margin-bottom: 8px; }
+.qa p { color: var(--cream-dim); font-size: 16px; }
+.more { margin-top: 40px; color: var(--cream-dim); font-size: 16px; }
+
+/* Cross-promotion */
+.promo { border: 2px solid var(--rule); padding: 32px 28px; }
+.promo h3 { font-family: 'Wanted', Georgia, serif; font-size: 34px; margin-bottom: 10px; }
+.promo p { color: var(--cream-dim); max-width: 54ch; margin-bottom: 18px; }
+.promo .btn { margin-right: 12px; margin-top: 6px; }
+
 /* Download band */
 .band { text-align: center; }
 .band h2 { margin-bottom: 18px; }
@@ -250,6 +332,7 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
     <div class="links">
       <a href="#what">What it does</a>
       <a href="#how">How it works</a>
+      <a href="/guides/">Guides</a>
       <a href="#download">Download</a>
       <a href="https://github.com/princezoho/zohoboil">GitHub</a>
     </div>
@@ -331,6 +414,52 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
   </div>
 </section>
 
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>What is line boil?</h3>
+        <p>Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no line ever lands in exactly the same place twice. Boiler puts that wander back into footage that never had it.</p>
+      </div>
+      <div class="qa">
+        <h3>Is it free?</h3>
+        <p>Yes. Free, and open source under the MIT license.</p>
+      </div>
+      <div class="qa">
+        <h3>What does it run on?</h3>
+        <p>macOS 12 or later on Apple Silicon. Intel Macs are not supported yet.</p>
+      </div>
+      <div class="qa">
+        <h3>What goes in and what comes out?</h3>
+        <p>MP4, MOV, and animated GIF go in. An MP4 comes out, H.264, with the original audio.</p>
+      </div>
+      <div class="qa">
+        <h3>Does my video get uploaded?</h3>
+        <p>No. Everything happens on your machine. ffmpeg is bundled inside the app and nothing goes over the network.</p>
+      </div>
+      <div class="qa">
+        <h3>How long does it take?</h3>
+        <p>Roughly a second per frame, so a thirty second clip is a few minutes. Check settings on a single frame in the preview before committing to a full pass.</p>
+      </div>
+    </div>
+    <p class="more">Longer answers in the <a href="/guides/">guides</a>: <a href="/guides/what-is-line-boil">what line boil is</a>, <a href="/guides/how-to-add-line-boil-to-video">how to apply it</a>, <a href="/guides/line-boil-settings-explained">what every setting does</a>, <a href="/guides/make-video-look-hand-drawn">making video look hand-drawn</a>, and <a href="/guides/chromatic-aberration-video">chromatic aberration</a>.</p>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="wrap">
+    <h2>Also from this studio</h2>
+    <p class="section-lede">Boiler came out of making a western cartoon. The same studio makes a game set in the same world.</p>
+    <div class="promo">
+      <h3>Halfsies</h3>
+      <p>A daily game about cutting things exactly in half by eye. One puzzle a day, one attempt, scored on how close you got. Free on iPhone.</p>
+      <p><a class="btn" href="https://apps.apple.com/us/app/halfsies/id6789426613">Get it on the App Store</a>
+         <a class="btn btn-ghost" href="https://halfsies.jejestudios.com">See how it plays</a></p>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="download">
   <div class="wrap">
     <h2>Take it for a ride</h2>
@@ -343,7 +472,7 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
 <div class="wrap">
   <footer>
     <span>Made by <a href="https://www.jejestudios.com">Jeje Studios</a>.</span>
-    <span><a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="https://github.com/princezoho/zohoboil/issues">Report a bug</a></span>
+    <span>Also: <a href="https://halfsies.jejestudios.com">Halfsies</a> &nbsp;·&nbsp; <a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="https://github.com/princezoho/zohoboil/issues">Report a bug</a></span>
   </footer>
 </div>
 
