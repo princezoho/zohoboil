@@ -67,19 +67,13 @@ nav .links a:hover { color: var(--rust); text-decoration: none; }
   border-bottom: 2px solid var(--rule);
   overflow: hidden;
   /* Poster doubles as the fallback if the video never plays. */
-  background: #0a0a0a url('assets/hero-poster-v2.jpg') center / cover no-repeat;
+  background: #0a0a0a url('assets/hero-possum-v3.jpg') center / cover no-repeat;
 }
 .hero-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   z-index: 0;
-}
-/* Sits between the video and the type, or the headline is unreadable. */
-.hero-veil {
-  position: absolute; inset: 0;
-  background: linear-gradient(rgba(10,10,10,0.78), rgba(10,10,10,0.92));
-  z-index: 1;
 }
 .hero-inner { position: relative; z-index: 2; max-width: 1040px; margin: 0 auto; padding: 90px 24px 80px; }
 
@@ -92,6 +86,21 @@ h1 {
   line-height: 0.92;
   letter-spacing: 0.01em;
   max-width: 15ch;
+}
+
+/* The headline boils like anything else Boiler touches: four displacement
+   maps, each held ~2 frames at 24fps, cycled. steps(1) makes each one snap
+   into place instead of tweening, which is what makes it read as redrawn
+   rather than as a wobble. */
+.boil-text { animation: boil-cycle 0.36s steps(1) infinite; }
+@keyframes boil-cycle {
+  0%   { filter: url(#boil-1); }
+  25%  { filter: url(#boil-2); }
+  50%  { filter: url(#boil-3); }
+  75%  { filter: url(#boil-4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boil-text { animation: none; filter: url(#boil-1); }
 }
 .lede {
   font-size: clamp(19px, 2.2vw, 23px);
@@ -212,6 +221,29 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
 </head>
 <body>
 
+<!-- Displacement maps for the headline boil. Same idea as the app: fractal
+     noise pushed through a displacement map, a different seed per drawing. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="boil-1" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="boil-2" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="boil-3" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="42" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="boil-4" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="88" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
 <div class="nav-band">
   <nav>
     <a class="wordmark" href="/">BOILER</a>
@@ -225,11 +257,10 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
 </div>
 
 <div class="hero">
-  <video class="hero-video" src="assets/hero-cowboy-v2.mp4" poster="assets/hero-poster-v2.jpg"
+  <video class="hero-video" src="assets/hero-possum-v3.mp4" poster="assets/hero-possum-v3.jpg"
          autoplay loop muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
-  <div class="hero-veil"></div>
   <div class="hero-inner">
-    <h1>Every line should wobble.</h1>
+    <h1 class="boil-text">Every line should wobble.</h1>
     <p class="lede">Boiler gives video the restless, redrawn edge of hand-drawn animation. Drop a clip in, move a few sliders, save it out.</p>
     <div class="hero-actions">
       <a class="btn" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download for Mac</a>
