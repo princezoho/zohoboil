@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guides: line boil, hand-drawn video effects</title>
+<meta name="description" content="How line boil works, how to apply it, and what every setting does. From the makers of Boiler.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/">
+<meta property="og:title" content="Guides: line boil, hand-drawn video effects">
+<meta property="og:description" content="How line boil works, how to apply it, and what every setting does. From the makers of Boiler.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%94%A5</text></svg>">
+<style>
+:root{--ink:#0a0a0a;--cream:#f5e9dc;--cream-dim:#9a8b7c;--rust:#c87f2f;--rule:#2e2620;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--ink);color:var(--cream);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+ font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+@font-face{font-family:'Wanted';src:url('/assets/wanted.ttf') format('truetype');font-display:swap;}
+a{color:var(--rust);text-decoration:none;} a:hover{text-decoration:underline;}
+.nav-band{border-bottom:2px solid var(--rule);}
+nav{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
+ max-width:1040px;margin:0 auto;padding:20px 24px;}
+.wordmark{font-family:'Wanted',Georgia,serif;font-size:32px;letter-spacing:.06em;color:var(--cream);}
+nav .links{display:flex;gap:22px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;}
+nav .links a{color:var(--cream-dim);}
+.wrap{max-width:720px;margin:0 auto;padding:56px 24px 40px;}
+h1{font-family:'Wanted',Georgia,serif;font-size:clamp(36px,6.5vw,62px);line-height:1;margin-bottom:18px;}
+h2{font-family:'Wanted',Georgia,serif;font-size:clamp(24px,4vw,34px);line-height:1.1;margin:44px 0 12px;}
+h3{font-family:'Wanted',Georgia,serif;font-size:22px;color:var(--rust);margin:30px 0 8px;}
+p{margin:0 0 18px;}
+.answer{font-size:21px;color:var(--cream);border-left:3px solid var(--rust);padding-left:18px;margin:0 0 26px;}
+.meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);
+ border-top:2px solid var(--rule);border-bottom:2px solid var(--rule);padding:10px 0;margin:0 0 30px;}
+ul{padding-left:22px;margin:0 0 18px;} li{margin:7px 0;}
+blockquote{margin:26px 0;padding-left:18px;border-left:3px solid var(--rule);color:var(--cream-dim);font-size:20px;}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:16px;}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--rule);vertical-align:top;}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--cream-dim);}
+code{background:#1a1512;padding:2px 6px;font-size:15px;}
+.cta{display:inline-block;background:var(--rust);color:var(--ink);font-weight:700;letter-spacing:.05em;
+ text-transform:uppercase;padding:15px 30px;border:2px solid var(--rust);margin:8px 0;}
+.cta:hover{background:var(--ink);color:var(--rust);text-decoration:none;}
+.card{border:2px solid var(--rule);padding:26px;margin:44px 0 0;}
+.card h3{margin-top:0;}
+.card p{color:var(--cream-dim);font-size:16px;}
+.hub{list-style:none;padding:0;}
+.hub li{border-bottom:1px solid var(--rule);padding:22px 0;}
+.hub a{font-family:'Wanted',Georgia,serif;font-size:24px;color:var(--cream);}
+.hub p{color:var(--cream-dim);font-size:16px;margin:6px 0 0;}
+footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
+footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+</style>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Boiler guides", "url": "https://boiler.jejestudios.com/guides/", "hasPart": [{"@type": "Article", "headline": "Chromatic Aberration in Video, and How to Fake It Well", "url": "https://boiler.jejestudios.com/guides/chromatic-aberration-video"}, {"@type": "Article", "headline": "How to Add Line Boil to a Video on a Mac", "url": "https://boiler.jejestudios.com/guides/how-to-add-line-boil-to-video"}, {"@type": "Article", "headline": "Every Line Boil Setting, Explained", "url": "https://boiler.jejestudios.com/guides/line-boil-settings-explained"}, {"@type": "Article", "headline": "How to Make a Video Look Hand-Drawn", "url": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn"}, {"@type": "Article", "headline": "What Is Line Boil in Animation?", "url": "https://boiler.jejestudios.com/guides/what-is-line-boil"}]}]</script>
+</head>
+<body>
+<div class="nav-band"><nav>
+<a class="wordmark" href="/">BOILER</a>
+<div class="links">
+<a href="/guides/">Guides</a>
+<a href="/#download">Download</a>
+<a href="https://github.com/princezoho/zohoboil">GitHub</a>
+</div></nav></div>
+<div class="wrap">
+<h1>Guides</h1>
+<p class="answer">How the line boil effect works, how to apply it to your own
+footage, and what each setting actually changes.</p>
+<ul class="hub">
+<li><a href="/guides/chromatic-aberration-video">Chromatic Aberration in Video, and How to Fake It Well</a><p>What chromatic aberration actually is, why it shows up in old film and comics, and how to add it to video without it looking like a broken 3D movie.</p></li>
+<li><a href="/guides/how-to-add-line-boil-to-video">How to Add Line Boil to a Video on a Mac</a><p>A step-by-step method for adding a hand-drawn wobble to any video on macOS, including the settings to start from and the mistakes that make it look wrong.</p></li>
+<li><a href="/guides/line-boil-settings-explained">Every Line Boil Setting, Explained</a><p>What Max Shift, Region Size, Randomness, Hold Frames, Variations, Edge Weight, Chunkiness, and Wave Type each change, with the range worth using for each.</p></li>
+<li><a href="/guides/make-video-look-hand-drawn">How to Make a Video Look Hand-Drawn</a><p>The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.</p></li>
+<li><a href="/guides/what-is-line-boil">What Is Line Boil in Animation?</a><p>Line boil is the shimmer you see in hand-drawn animation, caused by every frame being drawn slightly differently. Where it comes from, why it reads as alive, and how to add it to digital video.</p></li>
+</ul>
+<div class="card">
+<h3>While you are here</h3>
+<p>The same studio makes <a href="https://halfsies.jejestudios.com">Halfsies</a>, a daily game about
+cutting things exactly in half by eye. One puzzle a day, one attempt, scored on
+how close you got. It is free on iPhone.</p>
+<p><a class="cta" href="https://apps.apple.com/us/app/halfsies/id6789426613">Get Halfsies on the App Store</a></p>
+</div>
+</div>
+<footer><div class="inner">
+<span>Made by <a href="https://www.jejestudios.com">Jeje Studios</a>, who also make
+<a href="https://halfsies.jejestudios.com">Halfsies</a>.</span>
+<span><a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="/guides/">Guides</a></span>
+</div></footer>
+</body>
+</html>
