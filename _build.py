@@ -226,7 +226,25 @@ how close you got. It is free on iPhone.</p>
 </div>"""
 
 
-def build_guide(meta):
+def related_block(meta, all_metas):
+    """Link every guide to its siblings.
+
+    An orphan page is a page Google reaches once and forgets. Cross-links give
+    the crawler a route between them and tell it these pages are one subject
+    rather than five unrelated posts.
+    """
+    others = [m for m in all_metas if m["slug"] != meta["slug"]]
+    if not others:
+        return ""
+    items = "\n".join(
+        f'<li><a href="/guides/{m["slug"]}">{esc(m["title"])}</a>'
+        f'<p>{esc(m["answer"][:150])}</p></li>'
+        for m in others
+    )
+    return f'<h2>Keep reading</h2>\n<ul class="hub">\n{items}\n</ul>'
+
+
+def build_guide(meta, all_metas=()):
     url = f"{SITE}/guides/{meta['slug']}"
     ld = [
         {
@@ -276,6 +294,7 @@ def build_guide(meta):
 <p class="answer">{inline(meta['answer'])}</p>
 <div class="meta">{date} &nbsp;·&nbsp; {STUDIO}</div>
 {render(meta['body'])}
+{related_block(meta, all_metas)}
 <div class="card">
 <h3>Boiler does this</h3>
 <p>Free Mac app. Drop a video in, move the sliders, save it out.
@@ -428,7 +447,7 @@ def main():
     urls = [SITE + "/"]
     urls.append(build_hub(metas))
     for m in metas:
-        urls.append(build_guide(m))
+        urls.append(build_guide(m, metas))
         print(f"  guides/{m['slug']}.html")
 
     build_sitemap(urls)
