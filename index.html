@@ -109,14 +109,54 @@ h2 {
 }
 .section-lede { color: var(--cream-dim); max-width: 56ch; margin-bottom: 40px; }
 
-/* Demo */
-/* Explicit ratio so the box holds its shape before the video loads. */
-.demo { width: 100%; display: block; border: 2px solid var(--rule); aspect-ratio: 2 / 1; background: #14100c; }
-.demo-labels {
-  display: grid; grid-template-columns: 1fr 1fr;
-  font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--cream-dim); margin-top: 12px; text-align: center;
+/* Before/after drag slider */
+.compare {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 854 / 480;   /* holds the box before the video loads */
+  border: 2px solid var(--rule);
+  background: #14100c;
+  overflow: hidden;
+  cursor: ew-resize;
+  touch-action: none;        /* let a drag pan the handle, not the page */
+  user-select: none;
 }
+.compare video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+/* The boiled side is clipped to the right of the handle. */
+.compare .after { clip-path: inset(0 0 0 var(--split, 50%)); }
+
+.compare .handle {
+  position: absolute; top: 0; bottom: 0;
+  left: var(--split, 50%);
+  width: 2px; margin-left: -1px;
+  background: var(--cream);
+  pointer-events: none;
+}
+.compare .grip {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px;
+  background: var(--cream); color: var(--ink);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; letter-spacing: -0.08em;
+}
+.compare .tag {
+  position: absolute; bottom: 12px;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  background: rgba(10,10,10,0.72); color: var(--cream);
+  padding: 5px 10px; pointer-events: none;
+}
+.compare .tag-before { left: 12px; }
+.compare .tag-after { right: 12px; }
+.compare:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+.drag-hint { margin-top: 12px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-dim); }
 
 /* Feature grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; background: var(--rule); border: 2px solid var(--rule); }
@@ -183,8 +223,16 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
   <div class="wrap">
     <h2>Before and after</h2>
     <p class="section-lede">Same footage, one pass through Boiler. The edges are redrawn a few pixels off on every held frame, the way a hand redraws them.</p>
-    <video class="demo" src="assets/demo-boil-v2.mp4" autoplay loop muted playsinline></video>
-    <div class="demo-labels"><span>Original</span><span>Boiled</span></div>
+    <div class="compare" id="compare" role="slider" tabindex="0"
+         aria-label="Drag to compare the original and boiled video"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <video class="before" src="assets/ifyougot-orig.mp4" autoplay loop muted playsinline preload="auto"></video>
+      <video class="after" src="assets/ifyougot-boiled.mp4" autoplay loop muted playsinline preload="auto"></video>
+      <span class="tag tag-before">Original</span>
+      <span class="tag tag-after">Boiled</span>
+      <div class="handle"><span class="grip">◀▶</span></div>
+    </div>
+    <p class="drag-hint">Drag to compare</p>
   </div>
 </section>
 
@@ -247,6 +295,71 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
     <span><a href="https://github.com/princezoho/zohoboil">Source</a> &nbsp;·&nbsp; <a href="https://github.com/princezoho/zohoboil/issues">Report a bug</a></span>
   </footer>
 </div>
+
+<script>
+(function () {
+  const box = document.getElementById('compare');
+  if (!box) return;
+  const before = box.querySelector('.before');
+  const after = box.querySelector('.after');
+
+  function setSplit(pct) {
+    pct = Math.max(0, Math.min(100, pct));
+    box.style.setProperty('--split', pct + '%');
+    box.setAttribute('aria-valuenow', Math.round(pct));
+  }
+
+  function splitFromEvent(e) {
+    const r = box.getBoundingClientRect();
+    setSplit(((e.clientX - r.left) / r.width) * 100);
+  }
+
+  let dragging = false;
+  box.addEventListener('pointerdown', e => {
+    dragging = true;
+    box.setPointerCapture(e.pointerId);
+    splitFromEvent(e);
+  });
+  box.addEventListener('pointermove', e => { if (dragging) splitFromEvent(e); });
+  box.addEventListener('pointerup', e => {
+    dragging = false;
+    if (box.hasPointerCapture(e.pointerId)) box.releasePointerCapture(e.pointerId);
+  });
+  box.addEventListener('pointercancel', () => { dragging = false; });
+
+  box.addEventListener('keydown', e => {
+    const cur = parseFloat(box.style.getPropertyValue('--split')) || 50;
+    if (e.key === 'ArrowLeft') { setSplit(cur - 4); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { setSplit(cur + 4); e.preventDefault(); }
+  });
+
+  // Two separate <video> elements drift apart over a loop, which ruins the
+  // comparison. Pin the boiled one to the original whenever it slips.
+  function sync() {
+    if (Math.abs(after.currentTime - before.currentTime) > 0.06) {
+      after.currentTime = before.currentTime;
+    }
+  }
+  before.addEventListener('timeupdate', sync);
+  before.addEventListener('seeked', sync);
+  before.addEventListener('play', () => { after.play().catch(() => {}); });
+  before.addEventListener('pause', () => after.pause());
+
+  // Autoplay can be refused until the page is interacted with. Try again on
+  // the first touch rather than leaving two frozen frames on screen.
+  function kick() {
+    before.play().catch(() => {});
+    after.play().catch(() => {});
+  }
+  box.addEventListener('pointerdown', kick, { once: true });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) kick();
+  });
+  kick();
+
+  setSplit(50);
+})();
+</script>
 
 </body>
 </html>
