@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Make a Video Look Hand-Drawn</title>
-<meta name="description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<link rel="canonical" href="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
-<meta property="og:title" content="How to Make a Video Look Hand-Drawn">
-<meta property="og:description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<meta property="og:url" content="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
+<title>How to Make AI-Generated Video Look Hand-Drawn</title>
+<meta name="description" content="Generated animation comes out too clean and too stable. The specific artifacts that give it away, and the passes that put a hand back into it.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/make-ai-video-look-hand-drawn">
+<meta property="og:title" content="How to Make AI-Generated Video Look Hand-Drawn">
+<meta property="og:description" content="Generated animation comes out too clean and too stable. The specific artifacts that give it away, and the passes that put a hand back into it.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/make-ai-video-look-hand-drawn">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@ code{background:#1a1512;padding:2px 6px;font-size:15px;}
 footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
 footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 </style>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Video Look Hand-Drawn", "description": "The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.", "datePublished": "2026-08-16", "dateModified": "2026-08-16", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Video Look Hand-Drawn", "item": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Video Look Hand-Drawn?", "acceptedAnswer": {"@type": "Answer", "text": "To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make AI-Generated Video Look Hand-Drawn", "description": "Generated animation comes out too clean and too stable. The specific artifacts that give it away, and the passes that put a hand back into it.", "datePublished": "2026-08-17", "dateModified": "2026-08-17", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/make-ai-video-look-hand-drawn", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make AI-Generated Video Look Hand-Drawn", "item": "https://boiler.jejestudios.com/guides/make-ai-video-look-hand-drawn"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make AI-Generated Video Look Hand-Drawn?", "acceptedAnswer": {"@type": "Answer", "text": "AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing for two frames instead of one, and let the color sit slightly out of register."}}]}]</script>
 </head>
 <body>
 <div class="nav-band"><nav>
@@ -64,40 +64,47 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <a href="https://github.com/princezoho/zohoboil">GitHub</a>
 </div></nav></div>
 <article class="wrap">
-<h1>How to Make a Video Look Hand-Drawn</h1>
-<p class="answer">To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing.</p>
-<div class="meta">August 16, 2026 &nbsp;·&nbsp; Jeje Studios</div>
-<p>Most attempts to make footage look hand-made reach for a texture overlay and stop there. A paper texture on top of mathematically perfect motion still reads as digital, because the giveaway was never the surface. It was the stability.</p>
-<p>Four things carry the impression, roughly in order of how much they matter.</p>
-<h2>1. The lines have to move</h2>
-<p>This is the one that does most of the work. In hand-drawn animation every frame is a fresh drawing, so every outline lands a little off from where it was. Adding that wander back is called line boil, and without it the other three effects are decoration on a corpse.</p>
-<h2>2. The frame rate has to feel drawn</h2>
-<p>Hand-drawn animation is usually shot on twos: one drawing held for two frames, twelve drawings a second instead of twenty-four. It is a budget decision that became a style, and audiences read it as animation.</p>
-<p>Holding the boil for two frames reproduces the rhythm without touching the actual frame rate of the clip. Hold for one and it buzzes. Hold for two and it breathes.</p>
-<h2>3. The color should be slightly out of register</h2>
-<p>Printed comics and film prints never had their color layers land perfectly on top of each other. Pulling the red and blue channels a pixel or two apart imitates that misregistration.</p>
-<p>Keep it small. Two or three pixels reads as a physical process. Ten pixels reads as a 3D movie without the glasses.</p>
-<h2>4. Grain last, and less than you think</h2>
-<p>Grain sells the idea that light passed through something physical. It belongs on top of everything else, because in the real process it was the last thing that happened.</p>
-<p>The failure mode is volume. Grain heavy enough to notice on a still frame is far too heavy in motion, where it crawls and pulls attention off the drawing.</p>
-<h2>The order matters</h2>
-<p>Apply these in the wrong order and the seams show.</p>
-<table><tr><th>Order</th><th>Step</th><th>Why here</th></tr><tr><td>1</td><td>Line boil</td><td>It has to happen to the artwork, not to a grainy copy of it</td></tr><tr><td>2</td><td>Frame hold</td><td>Part of the boil, not a separate pass</td></tr><tr><td>3</td><td>Channel split</td><td>Imitates a printing step, which came after the drawing</td></tr><tr><td>4</td><td>Grain</td><td>Imitates film, which came after the printing</td></tr></table>
-<p>A channel split applied before the boil gets displaced along with the edges, which smears the fringing into the wobble and looks like a compression artifact rather than a print.</p>
-<h2>What not to add</h2>
-<p>Skip the paper texture unless the piece genuinely lives on paper. It is the most reached-for and least convincing move, because real animation cels were photographed, not printed onto stock. A vignette has the same problem: it says lens, and lenses are what you are trying to get away from.</p>
-<p>Boiler does all four of these in one pass, in this order, and keeps the original audio.</p>
+<h1>How to Make AI-Generated Video Look Hand-Drawn</h1>
+<p class="answer">AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing for two frames instead of one, and let the color sit slightly out of register.</p>
+<div class="meta">August 17, 2026 &nbsp;·&nbsp; Jeje Studios</div>
+<p>Generated animation has a particular smell, and it is not usually the drawing. The drawing is often good. It is the motion.</p>
+<p>A generated frame sequence interpolates. Every edge moves along a smooth path, arrives exactly where the math says, and never overshoots or wanders. Nothing in it was ever attempted twice.</p>
+<p>Hand-drawn animation is the opposite. It is a stack of separate attempts at the same drawing, and the differences between attempts are what the eye reads as life.</p>
+<h2>The four artifacts that give it away</h2>
+<p><b>Edges that do not move.</b> In a hand-drawn cel, an outline that should be identical across two frames never is. In a generated sequence it often is, exactly, to the pixel. That stillness is the loudest tell.</p>
+<p><b>Everything on ones.</b> Generated output is one distinct image per frame, twenty-four a second. Traditional animation is usually twelve, each held twice. The extra smoothness reads as video, not drawing.</p>
+<p><b>Perfect color registration.</b> No physical process ever landed the color layers exactly on top of the line art. Generated frames do.</p>
+<p><b>Uniform texture.</b> Real footage has grain that crawls, and it sits on top of everything at once. Generated frames are clean, or carry a texture that was drawn into the image rather than laid over it.</p>
+<h2>What to do, in order</h2>
+<h3>1. Boil the lines</h3>
+<p>Displace the edges a few pixels off their true position, differently in different parts of the frame. This is the single highest-value pass. On a 1080p frame, start at 3 pixels and go up to 6 if the artwork is loose.</p>
+<p>Keep it edge-weighted. If the displacement applies evenly to the whole image you get a heat shimmer, not a redraw. The wobble has to concentrate where the lines are.</p>
+<h3>2. Hold each drawing for two frames</h3>
+<p>This matters as much as the boil itself. If the displacement changes every frame, the result buzzes like static, because twenty-four changes a second is not a rate any hand ever worked at.</p>
+<p>Hold for two and you land on twelve drawings a second, the rhythm of animation drawn on twos. The shimmer gets a pulse instead of a hiss.</p>
+<h3>3. Pull the color out of register</h3>
+<p>Offset red one way and blue the other by two or three pixels, leaving green alone. Green carries most of the perceived detail, so moving it softens the whole image while moving the other two only affects edges.</p>
+<h3>4. Lay grain over the top</h3>
+<p>Last, and less than feels right on a still frame. Grain that looks correct when paused is far too strong in motion.</p>
+<h2>What not to do</h2>
+<p><b>Do not drop the frame rate to fake the hold.</b> Exporting at 12fps throws away half your frames and makes camera moves stutter. Holding the *effect* for two frames while the video stays at 24 gives the drawn rhythm without wrecking the motion.</p>
+<p><b>Do not add a paper texture.</b> Animation cels were photographed, not printed on paper. It is the most common shortcut and the least convincing one.</p>
+<p><b>Do not stack every effect at maximum.</b> The goal is a frame that looks like it passed through a physical process, not one that looks like it passed through six filters.</p>
+<h2>Why this works</h2>
+<p>None of this adds information. It removes certainty.</p>
+<p>A perfectly stable edge tells the viewer that no hand was involved, because no hand can do that. Reintroducing a small, structured error puts the hand back, and the eye stops asking questions about it.</p>
+<p>The error has to be structured, though. Random noise per frame reads as a broken encode. Displacement that follows the edges, held for a beat, cycling through a few variations, reads as drawing.</p>
 <h2>Keep reading</h2>
 <ul class="hub">
 <li><a href="/guides/add-film-grain-to-video">How to Add Film Grain to Video Without Overdoing It</a><p>Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain fo</p></li>
 <li><a href="/guides/line-boil-after-effects">How to Make a Line Boil in After Effects</a><p>In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an express</p></li>
-<li><a href="/guides/make-ai-video-look-hand-drawn">How to Make AI-Generated Video Look Hand-Drawn</a><p>AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing</p></li>
 <li><a href="/guides/vhs-effect-video">How to Make a Convincing VHS Effect</a><p>A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of stati</p></li>
 <li><a href="/guides/animation-on-ones-twos-threes">Animating on Ones, Twos, and Threes</a><p>Animating on twos means holding each drawing for two frames, producing twelve drawings per second in twenty-four frame footage, which is the standard </p></li>
 <li><a href="/guides/chromatic-aberration-video">Chromatic Aberration in Video, and How to Fake It Well</a><p>Chromatic aberration is the colored fringing that appears when a lens or a printing process fails to land the red, green, and blue components of an im</p></li>
 <li><a href="/guides/free-video-effects-mac">Free Ways to Make Video Look Like Animation on a Mac</a><p>On a Mac you can make video look hand-drawn for free using Boiler for line boil and grain, ffmpeg for frame rate and color work from the command line,</p></li>
 <li><a href="/guides/how-to-add-line-boil-to-video">How to Add Line Boil to a Video on a Mac</a><p>To add line boil to a video on a Mac, open the clip in Boiler, set Max Shift to 3 pixels and Hold Frames to 2, cycle 4 variations, then process and sa</p></li>
 <li><a href="/guides/line-boil-settings-explained">Every Line Boil Setting, Explained</a><p>The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long ea</p></li>
+<li><a href="/guides/make-video-look-hand-drawn">How to Make a Video Look Hand-Drawn</a><p>To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color c</p></li>
 <li><a href="/guides/what-is-line-boil">What Is Line Boil in Animation?</a><p>Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no lin</p></li>
 </ul>
 <div class="card">

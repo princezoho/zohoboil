@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Make a Video Look Hand-Drawn</title>
-<meta name="description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<link rel="canonical" href="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
-<meta property="og:title" content="How to Make a Video Look Hand-Drawn">
-<meta property="og:description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<meta property="og:url" content="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
+<title>How to Make a Convincing VHS Effect</title>
+<meta name="description" content="Tape did specific things to an image. Which artifacts matter, which are overused, and the order to apply them so the result reads as a recording rather than a filter.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/vhs-effect-video">
+<meta property="og:title" content="How to Make a Convincing VHS Effect">
+<meta property="og:description" content="Tape did specific things to an image. Which artifacts matter, which are overused, and the order to apply them so the result reads as a recording rather than a filter.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/vhs-effect-video">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@ code{background:#1a1512;padding:2px 6px;font-size:15px;}
 footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
 footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 </style>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Video Look Hand-Drawn", "description": "The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.", "datePublished": "2026-08-16", "dateModified": "2026-08-16", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Video Look Hand-Drawn", "item": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Video Look Hand-Drawn?", "acceptedAnswer": {"@type": "Answer", "text": "To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Convincing VHS Effect", "description": "Tape did specific things to an image. Which artifacts matter, which are overused, and the order to apply them so the result reads as a recording rather than a filter.", "datePublished": "2026-08-17", "dateModified": "2026-08-17", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/vhs-effect-video", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Convincing VHS Effect", "item": "https://boiler.jejestudios.com/guides/vhs-effect-video"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Convincing VHS Effect?", "acceptedAnswer": {"@type": "Answer", "text": "A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of static, applied in that order, with the color signal degraded more than the brightness."}}]}]</script>
 </head>
 <body>
 <div class="nav-band"><nav>
@@ -64,40 +64,43 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <a href="https://github.com/princezoho/zohoboil">GitHub</a>
 </div></nav></div>
 <article class="wrap">
-<h1>How to Make a Video Look Hand-Drawn</h1>
-<p class="answer">To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing.</p>
-<div class="meta">August 16, 2026 &nbsp;·&nbsp; Jeje Studios</div>
-<p>Most attempts to make footage look hand-made reach for a texture overlay and stop there. A paper texture on top of mathematically perfect motion still reads as digital, because the giveaway was never the surface. It was the stability.</p>
-<p>Four things carry the impression, roughly in order of how much they matter.</p>
-<h2>1. The lines have to move</h2>
-<p>This is the one that does most of the work. In hand-drawn animation every frame is a fresh drawing, so every outline lands a little off from where it was. Adding that wander back is called line boil, and without it the other three effects are decoration on a corpse.</p>
-<h2>2. The frame rate has to feel drawn</h2>
-<p>Hand-drawn animation is usually shot on twos: one drawing held for two frames, twelve drawings a second instead of twenty-four. It is a budget decision that became a style, and audiences read it as animation.</p>
-<p>Holding the boil for two frames reproduces the rhythm without touching the actual frame rate of the clip. Hold for one and it buzzes. Hold for two and it breathes.</p>
-<h2>3. The color should be slightly out of register</h2>
-<p>Printed comics and film prints never had their color layers land perfectly on top of each other. Pulling the red and blue channels a pixel or two apart imitates that misregistration.</p>
-<p>Keep it small. Two or three pixels reads as a physical process. Ten pixels reads as a 3D movie without the glasses.</p>
-<h2>4. Grain last, and less than you think</h2>
-<p>Grain sells the idea that light passed through something physical. It belongs on top of everything else, because in the real process it was the last thing that happened.</p>
-<p>The failure mode is volume. Grain heavy enough to notice on a still frame is far too heavy in motion, where it crawls and pulls attention off the drawing.</p>
-<h2>The order matters</h2>
-<p>Apply these in the wrong order and the seams show.</p>
-<table><tr><th>Order</th><th>Step</th><th>Why here</th></tr><tr><td>1</td><td>Line boil</td><td>It has to happen to the artwork, not to a grainy copy of it</td></tr><tr><td>2</td><td>Frame hold</td><td>Part of the boil, not a separate pass</td></tr><tr><td>3</td><td>Channel split</td><td>Imitates a printing step, which came after the drawing</td></tr><tr><td>4</td><td>Grain</td><td>Imitates film, which came after the printing</td></tr></table>
-<p>A channel split applied before the boil gets displaced along with the edges, which smears the fringing into the wobble and looks like a compression artifact rather than a print.</p>
-<h2>What not to add</h2>
-<p>Skip the paper texture unless the piece genuinely lives on paper. It is the most reached-for and least convincing move, because real animation cels were photographed, not printed onto stock. A vignette has the same problem: it says lens, and lenses are what you are trying to get away from.</p>
-<p>Boiler does all four of these in one pass, in this order, and keeps the original audio.</p>
+<h1>How to Make a Convincing VHS Effect</h1>
+<p class="answer">A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of static, applied in that order, with the color signal degraded more than the brightness.</p>
+<div class="meta">August 17, 2026 &nbsp;·&nbsp; Jeje Studios</div>
+<p>Most VHS filters fail in the same way. They add scanlines and heavy static and call it done, and the result looks like a screen, not a tape.</p>
+<p>Tape did something specific, and it is worth knowing what.</p>
+<h2>What VHS actually did to an image</h2>
+<p>VHS recorded brightness and color as separate signals with wildly different bandwidth. Luminance got about 3 MHz. Chrominance got around 0.4 MHz.</p>
+<p>That single fact explains most of the look. <b>Color was recorded at roughly a tenth the horizontal detail of brightness.</b> Edges stayed reasonably crisp in black and white while color smeared sideways across them.</p>
+<p>So the defining artifact is not static. It is color bleeding horizontally while the underlying image stays sharper than the color suggests.</p>
+<h2>The artifacts, in order of how much they matter</h2>
+<p><b>1. Horizontal color bleed.</b> Blur the color channels horizontally, several pixels wide, while leaving brightness alone. If your tool separates luma and chroma, blur chroma only, on the horizontal axis only. This is the one that sells it.</p>
+<p><b>2. Channel offset.</b> Two or three pixels of red and blue separation. Tape heads and the color-under encoding scheme left the color slightly displaced from the luminance it belonged to.</p>
+<p><b>3. Soft focus.</b> VHS was never sharp. A small overall blur, less than a pixel, before anything else.</p>
+<p><b>4. Noise, in the right places.</b> Tape noise is not TV static. It is fine, it sits mostly in the darker parts of the image, and it has a slight horizontal streak to it. Uniform white static across the whole frame is a broadcast artifact, not a tape one.</p>
+<p><b>5. Head switching noise.</b> The band of torn signal at the very bottom of the frame, a few lines tall, where the video head switched. Usually cropped off in playback, which is why it reads as authentic when present.</p>
+<h2>What to leave out</h2>
+<p><b>Scanlines.</b> These come from a CRT displaying the image, not from the tape storing it. If your footage is meant to look like a tape playing on a modern screen, scanlines are wrong. If it is meant to look like a tape playing on a CRT that someone filmed, they belong, and so does screen curvature and glow.</p>
+<p><b>Constant rolling and tracking errors.</b> A tape with continuous tracking problems is a broken tape. Real VHS was mostly stable, with occasional disruption. Intermittent is convincing; constant is a filter.</p>
+<p><b>Timecode burn-in and date stamps.</b> Fine if you want the camcorder look, but that is a different thing from a commercial tape, and mixing the two signals is a common error.</p>
+<h2>Order of operations</h2>
+<table><tr><th>Order</th><th>Step</th><th>Reason</th></tr><tr><td>1</td><td>Soften slightly</td><td>The lens and the tape were both soft; this happened first</td></tr><tr><td>2</td><td>Bleed the color horizontally</td><td>The recording stage</td></tr><tr><td>3</td><td>Offset red and blue</td><td>Also the recording stage</td></tr><tr><td>4</td><td>Add tape noise</td><td>Present in the signal as recorded</td></tr><tr><td>5</td><td>Crop or add head switching noise</td><td>The playback stage</td></tr></table>
+<p>Anything imitating the display, if you want it, goes after all of this.</p>
+<h2>Combining it with drawn footage</h2>
+<p>If the source is animation, boil the lines first. In the real chain the drawing existed before the camera, the camera before the tape, and the tape before the television. Reproducing that order keeps the effects from contaminating each other.</p>
+<p>Skip that order and the giveaway is specific: a channel offset applied before a displacement gets dragged along by the displacement, so the color fringe follows the wobble instead of sitting square on the edge. It reads as a bad encode rather than a bad tape.</p>
+<p><a href="/">Boiler</a> does the boil, the channel offsets with a blur on the split, and five kinds of noise overlay, in that order, in one pass. It is free and open source.</p>
 <h2>Keep reading</h2>
 <ul class="hub">
 <li><a href="/guides/add-film-grain-to-video">How to Add Film Grain to Video Without Overdoing It</a><p>Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain fo</p></li>
 <li><a href="/guides/line-boil-after-effects">How to Make a Line Boil in After Effects</a><p>In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an express</p></li>
 <li><a href="/guides/make-ai-video-look-hand-drawn">How to Make AI-Generated Video Look Hand-Drawn</a><p>AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing</p></li>
-<li><a href="/guides/vhs-effect-video">How to Make a Convincing VHS Effect</a><p>A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of stati</p></li>
 <li><a href="/guides/animation-on-ones-twos-threes">Animating on Ones, Twos, and Threes</a><p>Animating on twos means holding each drawing for two frames, producing twelve drawings per second in twenty-four frame footage, which is the standard </p></li>
 <li><a href="/guides/chromatic-aberration-video">Chromatic Aberration in Video, and How to Fake It Well</a><p>Chromatic aberration is the colored fringing that appears when a lens or a printing process fails to land the red, green, and blue components of an im</p></li>
 <li><a href="/guides/free-video-effects-mac">Free Ways to Make Video Look Like Animation on a Mac</a><p>On a Mac you can make video look hand-drawn for free using Boiler for line boil and grain, ffmpeg for frame rate and color work from the command line,</p></li>
 <li><a href="/guides/how-to-add-line-boil-to-video">How to Add Line Boil to a Video on a Mac</a><p>To add line boil to a video on a Mac, open the clip in Boiler, set Max Shift to 3 pixels and Hold Frames to 2, cycle 4 variations, then process and sa</p></li>
 <li><a href="/guides/line-boil-settings-explained">Every Line Boil Setting, Explained</a><p>The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long ea</p></li>
+<li><a href="/guides/make-video-look-hand-drawn">How to Make a Video Look Hand-Drawn</a><p>To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color c</p></li>
 <li><a href="/guides/what-is-line-boil">What Is Line Boil in Animation?</a><p>Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no lin</p></li>
 </ul>
 <div class="card">
