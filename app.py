@@ -18,6 +18,22 @@ import numpy as np
 from PIL import Image
 
 
+def ffmpeg_runs(path):
+    """Whether this binary can actually execute here.
+
+    The repo ships an arm64 macOS ffmpeg in bin/. Checking only for existence
+    and the executable bit picks that file on Linux and Windows too, and the
+    failure surfaces much later as "Exec format error" from the encode step.
+    Running it once is the only check that covers a wrong architecture, a
+    wrong OS, and a truncated download alike.
+    """
+    try:
+        proc = subprocess.run([path, '-version'], capture_output=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return proc.returncode == 0
+
+
 def find_ffmpeg():
     """Locate ffmpeg: bundled binary first, then PATH, then well-known locations."""
     is_windows = platform.system() == 'Windows'
@@ -31,7 +47,7 @@ def find_ffmpeg():
     # Alongside this script (dev mode)
     candidates.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', exe_name))
     for c in candidates:
-        if os.path.exists(c) and os.access(c, os.X_OK):
+        if os.path.exists(c) and os.access(c, os.X_OK) and ffmpeg_runs(c):
             return c
     found = shutil.which('ffmpeg')
     if found:
@@ -84,7 +100,12 @@ def sanitize_name(name):
     """Reduce an arbitrary upload filename to something safe to write to disk."""
     keep = [c for c in name if c.isalnum() or c in ' ._-']
     cleaned = ''.join(keep).strip().replace(' ', '-')
-    return cleaned[:60] or 'video'
+    # Leading dots make the file hidden on Unix, and a name of only dots or
+    # separators leaves nothing to write.
+    cleaned = cleaned.strip('.')
+    if not cleaned.strip('-_'):
+        return 'video'
+    return cleaned[:60]
 
 
 def unique_path(directory, filename):

@@ -1,0 +1,50 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    # The whole point of this matrix is to prove the cross-platform claim in
+    # the README rather than assert it. A hardcoded path or shell command is
+    # easy to reintroduce and impossible to notice on one machine.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ['3.11', '3.13']
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - name: Install ffmpeg (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Install ffmpeg (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ffmpeg
+
+      - name: Install ffmpeg (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg -y --no-progress
+
+      - name: Install dependencies
+        # opencv-python pulls GUI libraries that a headless runner does not
+        # have; the headless wheel exposes the same cv2 API.
+        run: |
+          python -m pip install --upgrade pip
+          pip install opencv-python-headless numpy scipy flask Pillow pytest
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
