@@ -84,7 +84,12 @@ def sanitize_name(name):
     """Reduce an arbitrary upload filename to something safe to write to disk."""
     keep = [c for c in name if c.isalnum() or c in ' ._-']
     cleaned = ''.join(keep).strip().replace(' ', '-')
-    return cleaned[:60] or 'video'
+    # Leading dots make the file hidden on Unix, and a name of only dots or
+    # separators leaves nothing to write.
+    cleaned = cleaned.strip('.')
+    if not cleaned.strip('-_'):
+        return 'video'
+    return cleaned[:60]
 
 
 def unique_path(directory, filename):

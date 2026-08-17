@@ -1,5 +1,8 @@
 # Boiler
 
+[![tests](https://github.com/princezoho/zohoboil/actions/workflows/ci.yml/badge.svg)](https://github.com/princezoho/zohoboil/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 > A Mac app that gives video the wobbling line of hand-drawn animation. Drop a clip in, move a few sliders, save it out.
 
 **[boiler.jejestudios.com](https://boiler.jejestudios.com)**
@@ -29,6 +32,8 @@ Silicon or macOS.
 
 Everywhere else, run it from source. The processing is OpenCV, NumPy and
 ffmpeg, all of which are cross-platform, and the interface is a local web page.
+The test suite runs on Linux, macOS and Windows in CI, so this is checked
+rather than assumed.
 
 | Platform | How |
 | --- | --- |
@@ -195,6 +200,16 @@ xcrun stapler staple dist/Boiler.app
 ./package_dmg.sh 1.0.0
 ```
 
+### Tests
+
+```bash
+pip install pytest
+python -m pytest tests/ -v
+```
+
+They cover the effect itself, the download path, and that no platform-specific
+command is hardcoded. CI runs them on all three operating systems.
+
 ### Project layout
 
 ```
@@ -206,6 +221,7 @@ build_dmg.sh      Builds the .app and a DMG
 package_dmg.sh    Wraps a stapled .app into a notarized DMG
 bin/ffmpeg        Bundled ffmpeg binary (arm64, macOS)
 site/             The boiler.jejestudios.com landing page
+tests/            Test suite, run on all three OSes in CI
 docs/             Screenshots and release notes
 ```
 
