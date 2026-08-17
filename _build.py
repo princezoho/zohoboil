@@ -47,7 +47,7 @@ HALFSIES_APP = "https://apps.apple.com/us/app/halfsies/id6789426613"
 
 VERSION = "1.0.0"
 PRICE = "0"
-REQUIRES = "macOS 12 or later, Apple Silicon"
+REQUIRES = "macOS 12+ on Apple Silicon for the prebuilt app; runs from source on Intel Macs, Windows and Linux"
 
 # Facts restated everywhere a machine might read them. One source, so the
 # landing page, the guides and llms.txt cannot disagree with each other.
@@ -55,6 +55,7 @@ FACTS = [
     ("What it is", "A Mac app that applies a hand-drawn line boil to video."),
     ("Price", "Free, and open source under the MIT license."),
     ("Requirements", REQUIRES),
+    ("Platforms", "macOS, Windows and Linux. The test suite runs on all three in CI."),
     ("Input formats", "MP4, MOV, and animated GIF."),
     ("Output", "MP4, H.264, with the original audio preserved."),
     ("Effects", "Line boil, chromatic aberration, and five noise overlays."),

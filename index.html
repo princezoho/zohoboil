@@ -21,7 +21,7 @@
   "@type": "SoftwareApplication",
   "name": "Boiler",
   "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "macOS 12 or later, Apple Silicon",
+  "operatingSystem": "macOS, Windows, Linux",
   "url": "https://boiler.jejestudios.com",
   "downloadUrl": "https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg",
   "softwareVersion": "1.0.0",
@@ -55,7 +55,7 @@
    {
     "@type": "Question",
     "name": "What does Boiler run on?",
-    "acceptedAnswer": { "@type": "Answer", "text": "macOS 12 or later on Apple Silicon. It is signed and notarized by Apple, so it opens on a double-click." }
+    "acceptedAnswer": { "@type": "Answer", "text": "The prebuilt Mac app needs macOS 12 or later on Apple Silicon and is signed and notarized by Apple, so it opens on a double-click. Nothing in the code is macOS-specific, so Intel Macs, Windows and Linux can run it from source." }
    },
    {
     "@type": "Question",
@@ -348,7 +348,7 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
     <div class="hero-actions">
       <a class="btn" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download for Mac</a>
       <a class="btn btn-ghost" href="#what">See it</a>
-      <span class="req">Free. macOS 12 or later, Apple Silicon.</span>
+      <span class="req">Free and open source. macOS 12+ on Apple Silicon, or run from source anywhere.</span>
     </div>
   </div>
 </div>
@@ -428,7 +428,7 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
       </div>
       <div class="qa">
         <h3>What does it run on?</h3>
-        <p>macOS 12 or later on Apple Silicon. Intel Macs are not supported yet.</p>
+        <p>The prebuilt app is macOS 12 or later on Apple Silicon, because the installer is built for that architecture. Nothing in the code requires it, so Intel Macs, Windows and Linux run it from source. The test suite runs on all three in CI.</p>
       </div>
       <div class="qa">
         <h3>What goes in and what comes out?</h3>
@@ -465,7 +465,7 @@ footer { padding: 44px 0 66px; color: var(--cream-dim); font-size: 15px; display
     <h2>Take it for a ride</h2>
     <p class="section-lede" style="margin: 0 auto 30px;">Signed and notarized by Apple, so it opens on a double-click.</p>
     <a class="btn" href="https://github.com/princezoho/zohoboil/releases/latest/download/Boiler-1.0.0.dmg">Download Boiler 1.0.0</a>
-    <p class="req">macOS 12 or later, Apple Silicon. Free, and the source is on <a href="https://github.com/princezoho/zohoboil">GitHub</a>.</p>
+    <p class="req">The download is macOS 12 or later on Apple Silicon. Intel Macs, Windows and Linux run it from <a href="https://github.com/princezoho/zohoboil">source</a>, tested on all three in CI.</p>
   </div>
 </section>
 
