@@ -128,3 +128,22 @@ def test_unknown_job_is_not_a_server_error():
     c = boiler.app.test_client()
     assert c.get("/download/nope").status_code == 404
     assert c.post("/save/nope").status_code == 400
+
+
+def test_bundled_ffmpeg_is_rejected_when_it_cannot_run(tmp_path, monkeypatch):
+    """A macOS binary must not be selected on Linux or Windows.
+
+    bin/ffmpeg in this repo is arm64 macOS. Existence plus the executable bit
+    is not enough to know it will run.
+    """
+    fake = tmp_path / "bin" / "ffmpeg"
+    fake.parent.mkdir()
+    fake.write_bytes(b"\xcf\xfa\xed\xfe not a binary for this platform")
+    fake.chmod(0o755)
+
+    monkeypatch.setattr(boiler.os.path, "dirname", lambda _p: str(tmp_path))
+    monkeypatch.setattr(boiler.shutil, "which", lambda _n: "/usr/bin/ffmpeg-from-path")
+    monkeypatch.setattr(boiler.os.path, "exists", lambda p: True)
+
+    assert not boiler.ffmpeg_runs(str(fake))
+    assert boiler.find_ffmpeg() == "/usr/bin/ffmpeg-from-path"
