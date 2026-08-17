@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Make a Video Look Hand-Drawn</title>
-<meta name="description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<link rel="canonical" href="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
-<meta property="og:title" content="How to Make a Video Look Hand-Drawn">
-<meta property="og:description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<meta property="og:url" content="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
+<title>How to Add Film Grain to Video Without Overdoing It</title>
+<meta name="description" content="What grain actually is, why it should sit on top of every other effect, and the amount that reads as film rather than as noise.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/add-film-grain-to-video">
+<meta property="og:title" content="How to Add Film Grain to Video Without Overdoing It">
+<meta property="og:description" content="What grain actually is, why it should sit on top of every other effect, and the amount that reads as film rather than as noise.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/add-film-grain-to-video">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@ code{background:#1a1512;padding:2px 6px;font-size:15px;}
 footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
 footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 </style>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Video Look Hand-Drawn", "description": "The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.", "datePublished": "2026-08-16", "dateModified": "2026-08-16", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Video Look Hand-Drawn", "item": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Video Look Hand-Drawn?", "acceptedAnswer": {"@type": "Answer", "text": "To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Add Film Grain to Video Without Overdoing It", "description": "What grain actually is, why it should sit on top of every other effect, and the amount that reads as film rather than as noise.", "datePublished": "2026-08-17", "dateModified": "2026-08-17", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/add-film-grain-to-video", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Add Film Grain to Video Without Overdoing It", "item": "https://boiler.jejestudios.com/guides/add-film-grain-to-video"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Add Film Grain to Video Without Overdoing It?", "acceptedAnswer": {"@type": "Answer", "text": "Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain for a 35mm feel or coarse grain for 16mm and home movies."}}]}]</script>
 </head>
 <body>
 <div class="nav-band"><nav>
@@ -64,32 +64,31 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <a href="https://github.com/princezoho/zohoboil">GitHub</a>
 </div></nav></div>
 <article class="wrap">
-<h1>How to Make a Video Look Hand-Drawn</h1>
-<p class="answer">To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing.</p>
-<div class="meta">August 16, 2026 &nbsp;·&nbsp; Jeje Studios</div>
-<p>Most attempts to make footage look hand-made reach for a texture overlay and stop there. A paper texture on top of mathematically perfect motion still reads as digital, because the giveaway was never the surface. It was the stability.</p>
-<p>Four things carry the impression, roughly in order of how much they matter.</p>
-<h2>1. The lines have to move</h2>
-<p>This is the one that does most of the work. In hand-drawn animation every frame is a fresh drawing, so every outline lands a little off from where it was. Adding that wander back is called line boil, and without it the other three effects are decoration on a corpse.</p>
-<h2>2. The frame rate has to feel drawn</h2>
-<p>Hand-drawn animation is usually shot on twos: one drawing held for two frames, twelve drawings a second instead of twenty-four. It is a budget decision that became a style, and audiences read it as animation.</p>
-<p>Holding the boil for two frames reproduces the rhythm without touching the actual frame rate of the clip. Hold for one and it buzzes. Hold for two and it breathes.</p>
-<h2>3. The color should be slightly out of register</h2>
-<p>Printed comics and film prints never had their color layers land perfectly on top of each other. Pulling the red and blue channels a pixel or two apart imitates that misregistration.</p>
-<p>Keep it small. Two or three pixels reads as a physical process. Ten pixels reads as a 3D movie without the glasses.</p>
-<h2>4. Grain last, and less than you think</h2>
-<p>Grain sells the idea that light passed through something physical. It belongs on top of everything else, because in the real process it was the last thing that happened.</p>
-<p>The failure mode is volume. Grain heavy enough to notice on a still frame is far too heavy in motion, where it crawls and pulls attention off the drawing.</p>
-<h2>The order matters</h2>
-<p>Apply these in the wrong order and the seams show.</p>
-<table><tr><th>Order</th><th>Step</th><th>Why here</th></tr><tr><td>1</td><td>Line boil</td><td>It has to happen to the artwork, not to a grainy copy of it</td></tr><tr><td>2</td><td>Frame hold</td><td>Part of the boil, not a separate pass</td></tr><tr><td>3</td><td>Channel split</td><td>Imitates a printing step, which came after the drawing</td></tr><tr><td>4</td><td>Grain</td><td>Imitates film, which came after the printing</td></tr></table>
-<p>A channel split applied before the boil gets displaced along with the edges, which smears the fringing into the wobble and looks like a compression artifact rather than a print.</p>
-<h2>What not to add</h2>
-<p>Skip the paper texture unless the piece genuinely lives on paper. It is the most reached-for and least convincing move, because real animation cels were photographed, not printed onto stock. A vignette has the same problem: it says lens, and lenses are what you are trying to get away from.</p>
-<p>Boiler does all four of these in one pass, in this order, and keeps the original audio.</p>
+<h1>How to Add Film Grain to Video Without Overdoing It</h1>
+<p class="answer">Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain for a 35mm feel or coarse grain for 16mm and home movies.</p>
+<div class="meta">August 17, 2026 &nbsp;·&nbsp; Jeje Studios</div>
+<p>Grain is the single most overused effect in the business, and the reason is simple: it looks right on a still and wrong in motion.</p>
+<p>Paused, a heavy grain reads as texture and character. Playing, the same grain crawls. Every particle changes every frame, and that motion pulls the eye off whatever you wanted it looking at.</p>
+<h2>What grain actually was</h2>
+<p>Film is an emulsion of silver halide crystals. Light strikes a crystal, the crystal develops, and the developed crystals form the image. The crystals are randomly distributed and randomly sized, so the image has a random texture baked into its structure.</p>
+<p>Faster film needs larger crystals to catch less light, which is why high-ISO stock is grainier. Bigger film gates spread the image over more crystals, which is why 35mm looks finer than 16mm.</p>
+<p>That gives you a rule worth remembering: <b>grain size implies both the format and the light</b>. Coarse grain says small format or a dark set. Fine grain says large format or plenty of light.</p>
+<h2>The types, and what each one suggests</h2>
+<table><tr><th>Type</th><th>Reads as</th></tr><tr><td>Fine grain</td><td>35mm, a proper shoot, controlled light</td></tr><tr><td>Coarse grain</td><td>16mm, Super 8, a pushed exposure</td></tr><tr><td>TV static</td><td>Broadcast, videotape, interference</td></tr><tr><td>Perlin noise</td><td>Not photographic; more like a texture or a wash</td></tr><tr><td>Scanlines</td><td>A CRT display, not a camera</td></tr></table>
+<p>Those last three are not grain and should not be used as if they were. Static and scanlines belong to video and displays. Reaching for them to imply film is a category error the audience feels without being able to name.</p>
+<h2>How much</h2>
+<p>Start lower than you think, then judge it in motion, never paused.</p>
+<p>A practical test: play the clip at full size and look at a flat area, like a sky or a wall. If you can see the grain moving there as a distinct layer, it is too strong. Grain should be something you notice when it is removed, not when it is present.</p>
+<h2>Grain goes last</h2>
+<p>In the physical chain, grain came at the end. Light passed through the lens, formed an image, and that image was recorded by the emulsion. The emulsion was the last thing to touch it.</p>
+<p>So in an effect chain, grain sits on top of everything: after any line work, after any color separation, after any blur.</p>
+<p>Get that order wrong and the tell is immediate. Grain applied before a displacement gets dragged around by it, which produces smeared streaks that read as a compression artifact. Grain applied before a color split gets split too, so each particle sprouts a colored twin, which no film stock ever did.</p>
+<table><tr><th>Order</th><th>Step</th></tr><tr><td>1</td><td>Line work and displacement</td></tr><tr><td>2</td><td>Color separation</td></tr><tr><td>3</td><td>Blur or soften</td></tr><tr><td>4</td><td>Grain</td></tr></table>
+<h2>The exception worth knowing</h2>
+<p>If you are imitating a specific chain, follow that chain rather than this list. Footage shot on film and then scanned has grain from the emulsion. Footage shot digitally and printed to film and rescanned has grain applied to an already-digital image. A digital intermediate that was graded after scanning has grain that got graded along with everything else.</p>
+<p>Most of the time none of this matters. When it does, it is because someone is comparing your shot to real footage from a specific era, and then the order of operations is the whole game.</p>
 <h2>Keep reading</h2>
 <ul class="hub">
-<li><a href="/guides/add-film-grain-to-video">How to Add Film Grain to Video Without Overdoing It</a><p>Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain fo</p></li>
 <li><a href="/guides/line-boil-after-effects">How to Make a Line Boil in After Effects</a><p>In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an express</p></li>
 <li><a href="/guides/make-ai-video-look-hand-drawn">How to Make AI-Generated Video Look Hand-Drawn</a><p>AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing</p></li>
 <li><a href="/guides/vhs-effect-video">How to Make a Convincing VHS Effect</a><p>A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of stati</p></li>
@@ -98,6 +97,7 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <li><a href="/guides/free-video-effects-mac">Free Ways to Make Video Look Like Animation on a Mac</a><p>On a Mac you can make video look hand-drawn for free using Boiler for line boil and grain, ffmpeg for frame rate and color work from the command line,</p></li>
 <li><a href="/guides/how-to-add-line-boil-to-video">How to Add Line Boil to a Video on a Mac</a><p>To add line boil to a video on a Mac, open the clip in Boiler, set Max Shift to 3 pixels and Hold Frames to 2, cycle 4 variations, then process and sa</p></li>
 <li><a href="/guides/line-boil-settings-explained">Every Line Boil Setting, Explained</a><p>The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long ea</p></li>
+<li><a href="/guides/make-video-look-hand-drawn">How to Make a Video Look Hand-Drawn</a><p>To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color c</p></li>
 <li><a href="/guides/what-is-line-boil">What Is Line Boil in Animation?</a><p>Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no lin</p></li>
 </ul>
 <div class="card">

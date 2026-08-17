@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Make a Video Look Hand-Drawn</title>
-<meta name="description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<link rel="canonical" href="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
-<meta property="og:title" content="How to Make a Video Look Hand-Drawn">
-<meta property="og:description" content="The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.">
-<meta property="og:url" content="https://boiler.jejestudios.com/guides/make-video-look-hand-drawn">
+<title>How to Make a Line Boil in After Effects</title>
+<meta name="description" content="The Turbulent Displace method for boiling lines in After Effects, why the default settings look wrong, and the one expression that fixes the frame rate.">
+<link rel="canonical" href="https://boiler.jejestudios.com/guides/line-boil-after-effects">
+<meta property="og:title" content="How to Make a Line Boil in After Effects">
+<meta property="og:description" content="The Turbulent Displace method for boiling lines in After Effects, why the default settings look wrong, and the one expression that fixes the frame rate.">
+<meta property="og:url" content="https://boiler.jejestudios.com/guides/line-boil-after-effects">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://boiler.jejestudios.com/assets/screenshot.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@ code{background:#1a1512;padding:2px 6px;font-size:15px;}
 footer{border-top:2px solid var(--rule);margin-top:56px;padding:30px 24px 60px;color:var(--cream-dim);font-size:15px;}
 footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 </style>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Video Look Hand-Drawn", "description": "The four effects that separate hand-made animation from digital video, and the order to apply them in so the result looks drawn rather than filtered.", "datePublished": "2026-08-16", "dateModified": "2026-08-16", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Video Look Hand-Drawn", "item": "https://boiler.jejestudios.com/guides/make-video-look-hand-drawn"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Video Look Hand-Drawn?", "acceptedAnswer": {"@type": "Answer", "text": "To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "How to Make a Line Boil in After Effects", "description": "The Turbulent Displace method for boiling lines in After Effects, why the default settings look wrong, and the one expression that fixes the frame rate.", "datePublished": "2026-08-17", "dateModified": "2026-08-17", "author": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "publisher": {"@type": "Organization", "name": "Jeje Studios", "url": "https://www.jejestudios.com"}, "mainEntityOfPage": "https://boiler.jejestudios.com/guides/line-boil-after-effects", "about": {"@type": "SoftwareApplication", "name": "Boiler"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Boiler", "item": "https://boiler.jejestudios.com"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://boiler.jejestudios.com/guides/"}, {"@type": "ListItem", "position": 3, "name": "How to Make a Line Boil in After Effects", "item": "https://boiler.jejestudios.com/guides/line-boil-after-effects"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How to Make a Line Boil in After Effects?", "acceptedAnswer": {"@type": "Answer", "text": "In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an expression that changes only every second or third frame instead of animating smoothly."}}]}]</script>
 </head>
 <body>
 <div class="nav-band"><nav>
@@ -64,33 +64,40 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <a href="https://github.com/princezoho/zohoboil">GitHub</a>
 </div></nav></div>
 <article class="wrap">
-<h1>How to Make a Video Look Hand-Drawn</h1>
-<p class="answer">To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color channels slightly, and lay a fine grain over the whole thing.</p>
-<div class="meta">August 16, 2026 &nbsp;·&nbsp; Jeje Studios</div>
-<p>Most attempts to make footage look hand-made reach for a texture overlay and stop there. A paper texture on top of mathematically perfect motion still reads as digital, because the giveaway was never the surface. It was the stability.</p>
-<p>Four things carry the impression, roughly in order of how much they matter.</p>
-<h2>1. The lines have to move</h2>
-<p>This is the one that does most of the work. In hand-drawn animation every frame is a fresh drawing, so every outline lands a little off from where it was. Adding that wander back is called line boil, and without it the other three effects are decoration on a corpse.</p>
-<h2>2. The frame rate has to feel drawn</h2>
-<p>Hand-drawn animation is usually shot on twos: one drawing held for two frames, twelve drawings a second instead of twenty-four. It is a budget decision that became a style, and audiences read it as animation.</p>
-<p>Holding the boil for two frames reproduces the rhythm without touching the actual frame rate of the clip. Hold for one and it buzzes. Hold for two and it breathes.</p>
-<h2>3. The color should be slightly out of register</h2>
-<p>Printed comics and film prints never had their color layers land perfectly on top of each other. Pulling the red and blue channels a pixel or two apart imitates that misregistration.</p>
-<p>Keep it small. Two or three pixels reads as a physical process. Ten pixels reads as a 3D movie without the glasses.</p>
-<h2>4. Grain last, and less than you think</h2>
-<p>Grain sells the idea that light passed through something physical. It belongs on top of everything else, because in the real process it was the last thing that happened.</p>
-<p>The failure mode is volume. Grain heavy enough to notice on a still frame is far too heavy in motion, where it crawls and pulls attention off the drawing.</p>
-<h2>The order matters</h2>
-<p>Apply these in the wrong order and the seams show.</p>
-<table><tr><th>Order</th><th>Step</th><th>Why here</th></tr><tr><td>1</td><td>Line boil</td><td>It has to happen to the artwork, not to a grainy copy of it</td></tr><tr><td>2</td><td>Frame hold</td><td>Part of the boil, not a separate pass</td></tr><tr><td>3</td><td>Channel split</td><td>Imitates a printing step, which came after the drawing</td></tr><tr><td>4</td><td>Grain</td><td>Imitates film, which came after the printing</td></tr></table>
-<p>A channel split applied before the boil gets displaced along with the edges, which smears the fringing into the wobble and looks like a compression artifact rather than a print.</p>
-<h2>What not to add</h2>
-<p>Skip the paper texture unless the piece genuinely lives on paper. It is the most reached-for and least convincing move, because real animation cels were photographed, not printed onto stock. A vignette has the same problem: it says lens, and lenses are what you are trying to get away from.</p>
-<p>Boiler does all four of these in one pass, in this order, and keeps the original audio.</p>
+<h1>How to Make a Line Boil in After Effects</h1>
+<p class="answer">In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an expression that changes only every second or third frame instead of animating smoothly.</p>
+<div class="meta">August 17, 2026 &nbsp;·&nbsp; Jeje Studios</div>
+<p>After Effects will do this, and the technique is worth understanding whether or not you use it, because it shows exactly what the effect is made of.</p>
+<h2>The effect to reach for</h2>
+<p><b>Turbulent Displace.</b> It generates a fractal noise field and pushes pixels around according to it, which is the whole mechanism of a line boil.</p>
+<p>Starting points, for a 1080p comp:</p>
+<table><tr><th>Property</th><th>Value</th><th>Why</th></tr><tr><td>Displacement</td><td>Turbulent Smoother</td><td>Less tearing than the default</td></tr><tr><td>Amount</td><td>8 to 15</td><td>Roughly 2 to 4 pixels of actual movement</td></tr><tr><td>Size</td><td>40 to 80</td><td>Large regions drift; small regions chatter</td></tr><tr><td>Complexity</td><td>1</td><td>Higher values add detail you cannot see at this amount</td></tr></table>
+<p>Note that Amount is not measured in pixels. A value of 10 at Size 60 moves edges a few pixels; the same Amount at Size 5 tears them apart. The two properties are not independent, which is the most common source of confusion with this effect.</p>
+<h2>Why it looks wrong out of the box</h2>
+<p>Animate Evolution linearly and you get a smooth, continuous churn. It looks like the image is underwater.</p>
+<p>Real animation does not churn. It changes, holds, changes again. Each drawing is a discrete event.</p>
+<h2>The fix, which is one expression</h2>
+<p>Put this on Evolution:</p>
+<p>```</p>
+<p>hold = 2;</p>
+<p>seed = 40;</p>
+<p>Math.floor(time * (1 / thisComp.frameDuration) / hold) * seed</p>
+<p>```</p>
+<p>That takes the current frame, divides by how many frames you want to hold, floors it, and multiplies by an arbitrary step. The result is a value that jumps to a new number every second frame and sits perfectly still in between.</p>
+<p>Change <code>hold</code> to 3 or 4 for a slower, heavier feel. The <code>seed</code> value only needs to be large enough that consecutive steps land on visibly different parts of the noise field; 40 works, so does 100.</p>
+<p>Without the floor, you have a wobble. With it, you have a redraw. That single function is the difference.</p>
+<h2>Two refinements</h2>
+<p><b>Confine it to the edges.</b> Turbulent Displace hits the whole layer, so flat interiors move along with the outlines. Duplicate the layer, run Find Edges on the copy, blur it slightly, and use it as a luma matte on an adjustment layer holding the displace. Now only the lines move.</p>
+<p><b>Vary it across the frame.</b> A single displace applies one noise field to everything, so distant parts of the image move in a correlated way. Two instances at different Sizes, or a slight Offset animation, breaks that up.</p>
+<h2>What it costs</h2>
+<p>Turbulent Displace with a matte is not cheap, and the edge-detection pass doubles the layer count. On a long sequence, expect to prerender.</p>
+<p>This is also the honest reason a dedicated tool exists. The After Effects route gives you a boil inside a comp where you can composite it against everything else, which is the right call when the shot needs that. If you only want a clip boiled and exported, a pass with edge weighting, hold, and variation as four numbers is faster.</p>
+<p><a href="/">Boiler</a> does exactly that pass, free and open source, and you can compare settings on a single frame before committing to a render. The After Effects method is better when the boil is one layer in a larger composite. Neither replaces the other.</p>
+<h2>If you use another tool</h2>
+<p>The same three ingredients apply anywhere: a noise field, a displacement driven by it, and a step function on the noise so it changes on twos instead of continuously. In Blender it is a Displace node fed by a noise texture with a stepped Value node. In Nuke it is IDistort with a noise input. The names change; the floor function does not.</p>
 <h2>Keep reading</h2>
 <ul class="hub">
 <li><a href="/guides/add-film-grain-to-video">How to Add Film Grain to Video Without Overdoing It</a><p>Add film grain as the very last step in your effect chain, keep it subtle enough that it is barely visible on a paused frame, and choose fine grain fo</p></li>
-<li><a href="/guides/line-boil-after-effects">How to Make a Line Boil in After Effects</a><p>In After Effects, a line boil is made with Turbulent Displace set to a small amount and a large size, with the Evolution property driven by an express</p></li>
 <li><a href="/guides/make-ai-video-look-hand-drawn">How to Make AI-Generated Video Look Hand-Drawn</a><p>AI-generated animation looks synthetic mostly because its edges are perfectly stable frame to frame, so the fix is to add line boil, hold each drawing</p></li>
 <li><a href="/guides/vhs-effect-video">How to Make a Convincing VHS Effect</a><p>A convincing VHS look comes from horizontal color bleed, a red and blue channel offset of two or three pixels, soft focus, and a small amount of stati</p></li>
 <li><a href="/guides/animation-on-ones-twos-threes">Animating on Ones, Twos, and Threes</a><p>Animating on twos means holding each drawing for two frames, producing twelve drawings per second in twenty-four frame footage, which is the standard </p></li>
@@ -98,6 +105,7 @@ footer .inner{max-width:720px;margin:0 auto;display:flex;justify-content:space-b
 <li><a href="/guides/free-video-effects-mac">Free Ways to Make Video Look Like Animation on a Mac</a><p>On a Mac you can make video look hand-drawn for free using Boiler for line boil and grain, ffmpeg for frame rate and color work from the command line,</p></li>
 <li><a href="/guides/how-to-add-line-boil-to-video">How to Add Line Boil to a Video on a Mac</a><p>To add line boil to a video on a Mac, open the clip in Boiler, set Max Shift to 3 pixels and Hold Frames to 2, cycle 4 variations, then process and sa</p></li>
 <li><a href="/guides/line-boil-settings-explained">Every Line Boil Setting, Explained</a><p>The six settings that matter in a line boil are Max Shift (how far edges move), Region Size (how large the moving areas are), Hold Frames (how long ea</p></li>
+<li><a href="/guides/make-video-look-hand-drawn">How to Make a Video Look Hand-Drawn</a><p>To make a video look hand-drawn, add line boil so the edges are redrawn each frame, hold each drawing for two frames instead of one, split the color c</p></li>
 <li><a href="/guides/what-is-line-boil">What Is Line Boil in Animation?</a><p>Line boil is the constant shimmer along the outlines in hand-drawn animation, caused by an artist redrawing every frame slightly differently so no lin</p></li>
 </ul>
 <div class="card">
