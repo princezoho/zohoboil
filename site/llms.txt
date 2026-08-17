@@ -12,7 +12,8 @@ video lacks.
 
 - What it is: A Mac app that applies a hand-drawn line boil to video.
 - Price: Free, and open source under the MIT license.
-- Requirements: macOS 12 or later, Apple Silicon
+- Requirements: macOS 12+ on Apple Silicon for the prebuilt app; runs from source on Intel Macs, Windows and Linux
+- Platforms: macOS, Windows and Linux. The test suite runs on all three in CI.
 - Input formats: MP4, MOV, and animated GIF.
 - Output: MP4, H.264, with the original audio preserved.
 - Effects: Line boil, chromatic aberration, and five noise overlays.
