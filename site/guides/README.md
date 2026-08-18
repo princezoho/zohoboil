@@ -6,6 +6,7 @@ One command turns `posts/*.md` into the whole search surface.
 python3 site/_build.py
 cd site && npx vercel deploy --prod --yes
 npx vercel alias set <printed-url> boiler.jejestudios.com
+python3 _indexnow.py            # after the alias, never before
 ```
 
 **The alias step is not optional.** The `boiler` Vercel project has no git
@@ -70,8 +71,16 @@ Every guide carries a Halfsies card, and the landing page has a studio
 section. Both are generated from constants at the top of `_build.py`
 (`HALFSIES`, `HALFSIES_APP`), so a changed link is a one-line edit.
 
-## After publishing
+## Getting crawled
 
-Submit `https://boiler.jejestudios.com/sitemap.xml` to Google Search Console.
-Nothing in this build system does that, and an unsubmitted sitemap is the
-usual reason a new set of pages sits unindexed for weeks.
+`_indexnow.py` pushes every sitemap URL to IndexNow, which Bing, Yandex, Seznam
+and Naver consume. Run it after the alias step, because it reads the live
+sitemap and would otherwise hand the crawlers URLs that are not serving yet.
+
+Google does not support IndexNow. For Google the sitemap is already submitted
+in Search Console, and the only accelerant is URL Inspection then Request
+Indexing, which is manual and capped at roughly ten URLs a day.
+
+The key file `d0345b2d905d09455a3c28d2e9b77f0d.txt` must keep serving its own
+name at the site root. That file is the entire authentication scheme, so
+deleting it silently breaks submissions.
